@@ -1,36 +1,29 @@
 package domain;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class BookLoan {
 
     private String loanId;
     private BookCopy copy;
     private Member member;
-    private LocalDateTime loanDate;
-    private LocalDateTime dueDate;
-    private LocalDateTime returnDate;
+    private LocalDate loanDate;
+    private LocalDate dueDate;
+    private LocalDate returnDate;
     private double fee;
     private boolean returned;
 
     public BookLoan(String loanId,
                     BookCopy copy,
                     Member member,
-                    LocalDateTime loanDate,
-                    LocalDateTime dueDate,
-                    LocalDateTime returnDate,
-                    double fee,
-                    boolean returned) {
+                    LocalDate loanDate,
+                    LocalDate dueDate) {
 
         this.loanId = loanId;
         this.copy = copy;
         this.member = member;
         this.loanDate = loanDate;
         this.dueDate = dueDate;
-        this.returnDate = returnDate;
-        this.fee = fee;
-
-
     }
 
     public BookCopy getCopy() {
@@ -45,7 +38,7 @@ public class BookLoan {
         return fee;
     }
 
-    public LocalDateTime getDueDate() {
+    public LocalDate getDueDate() {
         return dueDate;
     }
 
@@ -57,15 +50,15 @@ public class BookLoan {
         return member;
     }
 
-    public LocalDateTime getLoanDate() {
+    public LocalDate getLoanDate() {
         return loanDate;
     }
 
-    public LocalDateTime getReturnDate() {
+    public LocalDate getReturnDate() {
         return returnDate;
     }
 
-    public void setReturnDate(LocalDateTime returnDate) {
+    public void setReturnDate(LocalDate returnDate) {
         this.returnDate = returnDate;
     }
 

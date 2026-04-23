@@ -4,14 +4,16 @@ public class Book {
 
     private String isbn;
     private String title;
+    private String genre;
     private String author;
     private String language;
     private String publisher;
 
 
-    public Book(String isbn, String title, String author, String language, String publisher) {
+    public Book(String isbn, String title, String genre, String author, String language, String publisher) {
         this.isbn = isbn;
         this.title = title;
+        this.genre = genre;
         this.author = author;
         this.language = language;
         this.publisher = publisher;
@@ -37,4 +39,7 @@ public class Book {
         return publisher;
     }
 
+    public String getGenre() {
+        return genre;
+    }
 }
