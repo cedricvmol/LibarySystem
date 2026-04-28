@@ -10,4 +10,8 @@ public class LibraryService {
         this.bookService = bookService;
         this.loanService = loanService;
     }
+
+    public void addBook(String isbn,String title,String genre,String author,String language,String publisher){
+        bookService.addBook(isbn,title,genre,author,language,publisher);
+    }
 }
