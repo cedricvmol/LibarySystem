@@ -14,4 +14,8 @@ public class LibraryService {
     public void addBook(String isbn,String title,String genre,String author,String language,String publisher){
         bookService.addBook(isbn,title,genre,author,language,publisher);
     }
+
+    public void addCopies(String isbn,int amount){
+        bookService.addCopies(isbn,amount);
+    }
 }
