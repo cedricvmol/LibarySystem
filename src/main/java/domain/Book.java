@@ -8,15 +8,22 @@ public class Book {
     private String author;
     private String language;
     private String publisher;
+    private int loanPeriodDays;
 
 
-    public Book(String isbn, String title, String genre, String author, String language, String publisher) {
+    public Book(String isbn, String title, String genre, String author, String language, String publisher,int loanPeriodDays) {
         this.isbn = isbn;
         this.title = title;
         this.genre = genre;
         this.author = author;
         this.language = language;
         this.publisher = publisher;
+        this.loanPeriodDays = loanPeriodDays;
+    }
+
+    public Book(String isbn, String title, String genre, String author, String language, String publisher) {
+        this(isbn,title,genre,author,language,publisher,14);
+
     }
 
     public String getIsbn() {
@@ -41,5 +48,9 @@ public class Book {
 
     public String getGenre() {
         return genre;
+    }
+
+    public int getLoanPeriodDays(){
+        return loanPeriodDays;
     }
 }
