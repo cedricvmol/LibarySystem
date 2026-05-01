@@ -220,6 +220,14 @@ Each subtask summary should name the specific file and method/feature.
 Keep descriptions short and actionable: what to implement and any key
 constraints (e.g. default value, guard condition).
 
+### Commit messages
+Always prefix commit messages with the Jira issue key of the subtask being worked on.
+Format: `KAN-XX: <short description>`
+Example: `KAN-7: Add loanPeriodDays field to Book class`
+
+This lets Jira automatically link the commit to the ticket once the GitHub for Jira
+app is connected. If a commit spans multiple subtasks, list all keys: `KAN-8 KAN-9: ...`
+
 ---
 
 ## Concepts Atlas
