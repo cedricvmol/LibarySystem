@@ -194,6 +194,34 @@ raw config strings → constants or config files.
 - Don't be condescending — capable developer, not a beginner
 ---
 
+## Jira Integration
+
+When starting a new iteration, create Jira issues to track the work. Use the
+Atlassian MCP tools (prefixed `mcp__...__`) to interact with Jira.
+
+### Hierarchy
+```
+Epic  (1 per project)   — the overall project
+  └── Story (1 per iteration) — each iteration is a user story
+        └── Subtask (1 per task) — individual work items under the story
+```
+
+### Rules
+- **Epic**: create once per project, at project kickoff.
+- **Story**: one per iteration. Summary format: `Iteration N – <Theme>`.
+  Parent must be the project Epic.
+- **Subtask**: use `issueTypeName: "Subtaak"` and always set `parent` to the
+  Story key in the same call. Never create tasks as "Taak" under a Story —
+  they cannot be converted to Subtasks via the API after creation.
+- Create the Story first, then create all its Subtasks (parent key is needed).
+
+### Subtask content
+Each subtask summary should name the specific file and method/feature.
+Keep descriptions short and actionable: what to implement and any key
+constraints (e.g. default value, guard condition).
+
+---
+
 ## Concepts Atlas
 
 What the student has already learned, organized by category. Update this after
