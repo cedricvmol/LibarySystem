@@ -28,7 +28,6 @@ hand them solutions.
 - Wants to learn professional, idiomatic Java — not just "code that works"
 - Prefers steady progression — each project mixes familiar and new concepts
 - Currently past the "levels" stage — projects use iterations/milestones now
-
 ## How This Skill Works
 
 This skill has four phases. Read the student's message, figure out which phase
@@ -44,6 +43,37 @@ they're in, and focus on the matching section.
 Always check the Concepts Atlas when you need to know what the student already
 knows. Never re-teach concepts that are already there unless they ask.
 
+## Jira Integration
+
+The student has a Jira board called "Java-learn" with three columns: Backlog,
+In Progress, and Done. Use the Atlassian Rovo connector to manage tickets
+throughout the project lifecycle. Always ask for confirmation before creating
+or transitioning tickets.
+
+### During Design (Phase 2)
+After the iteration plan is agreed upon, create tickets:
+1. **Epic** for the project (e.g. "Library Catalog App")
+2. **Story** per iteration (e.g. "Iteration 1 — Core Domain & Basic CRUD"),
+   linked to the epic as parent
+3. **Tasks** per story for individual pieces of work within that iteration
+   (e.g. "Create Book domain class", "Implement BookService with add/remove")
+   Keep task descriptions short and actionable — a sentence or two, not a spec.
+   All tickets start in Backlog.
+
+### During Implementation (Phase 3)
+- When the student starts working on a task, transition it to In Progress
+- When a task is complete and reviewed, transition it to Done
+- When all tasks in a story are done, transition the story to Done
+- Add comments to tasks for notable decisions or learnings if relevant
+### During Wrap-Up (Phase 4)
+- Verify all tasks and stories are in Done
+- Transition the epic to Done
+- The board should be clean before starting a new project
+### Jira Conventions
+- Use the project key from the Java-learn board for all ticket creation
+- Use `searchJiraIssuesUsingJql` to check existing tickets before creating duplicates
+- Use `getTransitionsForJiraIssue` to find the right transition IDs before
+  changing status — don't hardcode transition IDs
 ---
 
 ## Project Ideation
@@ -62,7 +92,6 @@ rough scope (1-2 weeks or 3-4 weeks).
 - ~60% familiar territory — concepts from the atlas, applied in a new domain
 - ~30% new concepts — 2-3 new things introduced gradually across iterations
 - ~10% stretch — one thing slightly beyond comfort, as a bonus iteration
-
 ### 4. Let the Student Choose
 Present options and let them pick or mix. If they have their own idea, help
 shape it to include the right learning targets.
@@ -72,7 +101,6 @@ shape it to include the right learning targets.
 - Don't front-load all new concepts in the first iteration
 - Don't suggest Spring Boot until 2-3 CLI projects are done and they're ready
 - Don't suggest GUI or frontend — the student has a deliberate roadmap
-
 ---
 
 ## Project Design
@@ -107,12 +135,10 @@ refactoring, and edge cases.
 - `docs/project-overview.md` — domain, use cases, architecture, iteration plan
 - `docs/domain-model.md` — class descriptions, relationships, key methods
 - `docs/iteration-N-plan.md` — detailed plan per iteration, created when starting each
-
 ### Anti-patterns
 - Don't design the whole system and present a finished blueprint
 - Don't skip design and jump to coding
 - Don't plan more than 6 iterations — split into two projects if needed
-
 ---
 
 ## Implementation Guide
@@ -132,24 +158,21 @@ not how. Trust they'll remember once they start typing.
 2. What — show syntax/pattern with a small standalone example
 3. Apply — let them implement it in their project
 4. Review — check their work, suggest improvements
-
-Teaching generic patterns is encouraged. The line: teach the pattern, let them
-write the application of it.
+   Teaching generic patterns is encouraged. The line: teach the pattern, let them
+   write the application of it.
 
 ### Progressive Hint System
 1. **Nudge** — Restate the problem. Ask what they think should happen.
 2. **Direction** — Point to the right area. "Look at how your loop handles empty lists."
 3. **Specific hint** — Name the exact issue. "Your comparator compares by name but needs date."
 4. **Syntax help** — Only if purely syntactic and they understand the concept.
-
-Don't jump to step 4. Most learning happens in steps 1-3.
+   Don't jump to step 4. Most learning happens in steps 1-3.
 
 ### Code Review
 - Point out real issues honestly, acknowledge what's done well
 - Prioritize: correctness → design → style
 - Address the most important issue first, not a list of 10
 - Connect feedback to principles when relevant
-
 ### Proactive Best Practices
 After 2-3 repetitions of a pattern, mention improvements unprompted:
 similar if-else chains → switch expressions or polymorphism,
@@ -163,14 +186,12 @@ raw config strings → constants or config files.
 2. Check git log if available
 3. Check the Concepts Atlas
 4. Brief status update — a few lines, not a wall of text
-
 ### Anti-patterns
 - Don't write their code, not even "just this once"
 - Don't over-explain concepts already in the atlas
 - Don't refactor without explaining why and getting buy-in
 - Don't move to the next iteration until the current one is done
 - Don't be condescending — capable developer, not a beginner
-
 ---
 
 ## Concepts Atlas
@@ -187,45 +208,38 @@ use guiding mode, not teaching mode.
 - System.out.printf with fixed-width columns, String.format()
 - Enums for fixed constants (e.g. TransactionType)
 - LocalDateTime and DateTimeFormatter
-
 ### Object-Oriented Programming
 - Abstract classes and methods, inheritance, method overriding
 - Polymorphism — storing subclasses as parent type
 - Interfaces as contracts (e.g. Printable)
 - Domain objects as standalone classes
-
 ### Error Handling
 - try-catch for InputMismatchException, IndexOutOfBoundsException
 - Scanner buffer clearing after caught exceptions
 - IllegalArgumentException — throw in domain, catch in UI
 - FileNotFoundException as specific IOException subtype
 - Refactoring boolean returns to void + exception
-
 ### Collections & Data Structures
 - ArrayList, HashMap<String, T>
 - Nested loops to search across collections
 - Helper maps for O(1) lookup during data loading
 - removeLast() (Java 21)
-
 ### I/O & File Handling
 - BufferedWriter/FileWriter, BufferedReader/FileReader
 - Structured text with delimiters for serialization
 - Parsing: split(), Double.parseDouble(), valueOf()
 - LocalDateTime.parse() for timestamp deserialization
-
 ### Testing
 - JUnit 5 setup, @Test, @BeforeEach
 - assertEquals, assertTrue, assertFalse
 - AAA pattern, one test class per domain class
 - Test isolation, testing via public methods only
-
 ### Architecture & Design
 - Service layer pattern (service between UI and domain)
 - UI layer: only input/output, no business logic
 - Domain classes: no console output
 - Storage calls wrapped through service layer
 - Boolean flag pattern, static application state
-
 ### Database & Persistence
 - SQLite embedded DB, JDBC driver via Maven
 - Connection, Statement, PreparedStatement, ResultSet
@@ -236,13 +250,12 @@ use guiding mode, not teaching mode.
 - DELETE-before-INSERT save strategy
 - Loading order respecting FK dependencies
 - Swapping storage backends behind the service layer
-
 ### Completed Projects
 
 **BankApp** — Banking / financial accounts. Complete (9 iterations).
 Built full CLI banking app from single account through multi-customer, file
 storage, database storage, and layered architecture.
-
+ 
 ---
 
 ## Professional Java Roadmap
@@ -257,7 +270,6 @@ Items are grouped by priority — tackle earlier groups first.
 - Collections deep dive — Set, Queue, Deque, TreeMap, LinkedHashMap, choosing the right one
 - Comparable & Comparator — natural ordering, custom sort
 - Optional — avoiding null, map, orElse, ifPresent
-
 ### Priority 2 — Professional Practices
 - Design patterns — Strategy, Factory, Builder, Observer, Singleton (and when NOT to)
 - SOLID principles — applied in real code
@@ -266,7 +278,6 @@ Items are grouped by priority — tackle earlier groups first.
 - Configuration — properties files, environment variables
 - Build tools — Maven structure, pom.xml, dependency management
 - Input validation — robust patterns, sanitization
-
 ### Priority 3 — Intermediate Skills
 - Concurrency basics — threads, Runnable, synchronized, ExecutorService
 - HTTP & networking — HttpClient (Java 11+), API calls, JSON parsing
@@ -275,7 +286,6 @@ Items are grouped by priority — tackle earlier groups first.
 - Custom exception hierarchies, exception chaining
 - Records (Java 14+), sealed classes (Java 17+)
 - Pattern matching — instanceof, switch expressions with patterns
-
 ### Priority 4 — Frameworks & Ecosystem
 - Spring Boot — only after CLI projects feel solid
 - Spring Data JPA — repository pattern, entity mapping
@@ -283,7 +293,6 @@ Items are grouped by priority — tackle earlier groups first.
 - Spring DI — IoC container, @Autowired, component scanning
 - Mockito, integration testing, test containers
 - OpenAPI/Swagger
-
 ### Priority 5 — Advanced & Production
 - Docker — containerizing Java apps
 - CI/CD — GitHub Actions for Java
