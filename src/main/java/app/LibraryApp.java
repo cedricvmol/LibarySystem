@@ -72,6 +72,9 @@ public class LibraryApp {
                 case "4":
                     addCopy(libraryService, scanner);
                     break;
+                case "5":
+                    removeBook(libraryService,scanner);
+                    break;
                 case "b":
                     return;
             }
@@ -93,18 +96,22 @@ public class LibraryApp {
         String language = scanner.nextLine();
         System.out.print("Publisher : ");
         String publisher = scanner.nextLine();
-        System.out.printf("Amount of copies : ");
+        System.out.print("Loan period (leave blank for default value of 14 days): ");
+        String loan_period = scanner.nextLine();
+        System.out.print("Amount of copies : ");
         int copies = scanner.nextInt();
         scanner.nextLine();
 
         try {
-            libraryService.addBook(isbn, title, genre, author, language, publisher);
+            if(loan_period.isEmpty()){
+                libraryService.addBook(isbn, title, genre, author, language, publisher,14);
+            }else {
+                libraryService.addBook(isbn, title, genre, author, language, publisher,Integer.parseInt(loan_period));
+            }
             libraryService.addCopies(isbn, copies);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
-
-
     }
 
     public static void addCopy(LibraryService libraryService, Scanner scanner) {
@@ -114,7 +121,6 @@ public class LibraryApp {
         System.out.println("Give the amount of copies you want to add");
         int amount = scanner.nextInt();
         scanner.nextLine();
-
         try {
 
             libraryService.addCopies(isbn, amount);
@@ -166,6 +172,27 @@ public class LibraryApp {
         }
 
     }
+
+    public static void removeBook(LibraryService libraryService , Scanner scanner){
+        System.out.println("\n──REMOVE BOOK ────────────────");
+        System.out.println("Give the ISBN of the book you want to remove:");
+        String isbn = scanner.nextLine();
+
+
+        try {
+            Book removedBook = libraryService.getBook(isbn);
+            libraryService.removeBook(isbn);
+            System.out.println("  Successfully removed the following book:");
+            System.out.printf("  %-13s  %-30s  %n","ISBN","Title");
+            System.out.println("  " + "─".repeat(45));
+
+            System.out.printf("  %-13s  %-30s%n%n%n",removedBook.getIsbn(),removedBook.getTitle());
+
+        } catch (IllegalArgumentException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
 
     public static void addTestData(LibraryService libraryService){
 

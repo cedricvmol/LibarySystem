@@ -38,4 +38,8 @@ public class LibraryService {
     public Collection<BookCopy> getAllCopies(String isbn){
         return bookService.getAllCopiesForBook(isbn);
     }
+
+    public void removeBook(String isbn){
+        bookService.removeBook(isbn);
+    }
 }
