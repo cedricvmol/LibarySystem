@@ -1,5 +1,6 @@
 package app;
 
+import domain.BookCopy;
 import service.BookService;
 import service.LibraryService;
 import service.LoanService;
@@ -49,7 +50,7 @@ public class LibraryApp {
 
         while (true) {
             System.out.println("\n──BOOK MANAGEMENT ────────────────");
-            System.out.println("[1] Search books");
+            System.out.println("[1] Search book by ISBN");
             System.out.println("[2] View all books");
             System.out.println("[3] Add new book");
             System.out.println("[4] Add copies for a book");
@@ -59,6 +60,9 @@ public class LibraryApp {
             String input = scanner.nextLine().trim();
 
             switch (input) {
+                case "1":
+                    getBookByIsbn(libraryService,scanner);
+                    break;
                 case "2":
                     viewBooks(libraryService);
                     break;
@@ -125,13 +129,42 @@ public class LibraryApp {
 
         System.out.println("\n──ALL BOOKS ────────────────");
         System.out.printf("  %-13s  %-30s  %-25s  %-18s %s%n",
-                "ISBN","Title","Author","Genre","Loan Period");
+                "ISBN","Title","Author","Genre","Available");
         System.out.println("  " + "─".repeat(125));
 
         for(Book book : books){
             System.out.printf("  %-13s  %-30s  %-25s  %-18s %d%n",
                     book.getIsbn(),book.getTitle(),book.getAuthor(),book.getGenre(),book.getLoanPeriodDays());
         }
+    }
+
+
+    public static void getBookByIsbn(LibraryService libraryService,Scanner scanner){
+        System.out.println("\n──SEARCH BOOK BY ISBN ────────────────");
+        System.out.println("Search: ");
+        String isbn = scanner.nextLine();
+
+        try{
+            Book searchedBook = libraryService.getBook(isbn);
+            Collection<BookCopy> copies = libraryService.getAllCopies(isbn);
+
+            System.out.printf("  %-13s  %-30s %-25s %s%n","ISBN","Title","Author","Books Available");
+            System.out.println("  " + "─".repeat(90));
+
+            System.out.printf("  %-13s  %-30s %-25s %d%n%n%n",searchedBook.getIsbn(),searchedBook.getTitle(),searchedBook.getAuthor(),copies.size());
+
+            System.out.println("\n──ALL COPIES ──────────────────");
+            System.out.printf("  %-13s  %-30s %-25s %s%n","COPY-ID","Title","Author","STATUS");
+            System.out.println("  " + "─".repeat(90));
+
+            for (BookCopy copy : copies){
+                System.out.printf("  %-13s  %-30s %-25s %s%n",copy.getCopyId(),copy.getBook().getTitle(),copy.getBook().getAuthor(),copy.getStatus());
+            }
+
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
     public static void addTestData(LibraryService libraryService){
@@ -147,5 +180,19 @@ public class LibraryApp {
         libraryService.addBook("9782070360024", "Le Petit Prince", "Fable", "Antoine de Saint-Exupéry", "French", "Gallimard");
         libraryService.addBook("9788423335305", "Cien años de soledad", "Magical Realism", "Gabriel García Márquez", "Spanish", "Editorial Sudamericana", 21);
 
+
+        libraryService.addCopies("9780261103573",2);
+        libraryService.addCopies("9780743273565",5);
+        libraryService.addCopies("9780385333481",4);
+        libraryService.addCopies("9780679720201",3);
+        libraryService.addCopies("9780062315007",5);
+        libraryService.addCopies("9781501156700",6);
+        libraryService.addCopies("9780525559474",7);
+        libraryService.addCopies("9780316769174",6);
+
+
+
     }
+
+
 }

@@ -40,7 +40,7 @@ public class BookService {
         }
 
         for (int i = 0; i < amount; i++) {
-            String copyId = copyIdGenerator(books.get(isbn).getTitle());
+            String copyId = copyIdGenerator();
             bookCopies.put(copyId, new BookCopy(copyId, books.get(isbn), CopyStatus.AVAILABLE));
         }
 
@@ -98,16 +98,13 @@ public class BookService {
         return copies;
     }
 
-    public String copyIdGenerator(String title) {
+    public String copyIdGenerator() {
         Random random = new Random();
         StringBuilder id = new StringBuilder();
-        id.append(title);
-
         for (int i = 0; i < 6; i++) {
             int n = random.nextInt(10);
             id.append(n);
         }
-
         return id.toString();
     }
 

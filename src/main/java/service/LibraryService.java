@@ -1,6 +1,7 @@
 package service;
 
 import domain.Book;
+import domain.BookCopy;
 
 import java.util.Collection;
 
@@ -28,5 +29,13 @@ public class LibraryService {
 
     public Collection<Book> getAllBooks(){
         return bookService.getAllBooks();
+    }
+
+    public Book getBook(String isbn){
+        return bookService.getBook(isbn);
+    }
+
+    public Collection<BookCopy> getAllCopies(String isbn){
+        return bookService.getAllCopiesForBook(isbn);
     }
 }
