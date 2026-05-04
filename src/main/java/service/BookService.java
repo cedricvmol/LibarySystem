@@ -74,6 +74,22 @@ public class BookService {
 
     }
 
+    public int getTotalCopiesCount(String isbn) {
+        int count = 0;
+        for (BookCopy copy : bookCopies.values()) {
+            if (copy.getBook().getIsbn().equals(isbn)) count++;
+        }
+        return count;
+    }
+
+    public int getAvailableCopiesCount(String isbn) {
+        int count = 0;
+        for (BookCopy copy : bookCopies.values()) {
+            if (copy.getBook().getIsbn().equals(isbn) && copy.getStatus() == CopyStatus.AVAILABLE) count++;
+        }
+        return count;
+    }
+
     public Collection<BookCopy> getAllCopiesForBook(String isbn) {
         ArrayList<BookCopy> copies = new ArrayList<>();
 
