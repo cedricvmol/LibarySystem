@@ -8,7 +8,6 @@ import service.MemberService;
 import domain.Book;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Scanner;
 
 public class LibraryApp {
@@ -22,16 +21,42 @@ public class LibraryApp {
 
         LibraryService libraryService = new LibraryService(memberService, bookService, loanService);
         addTestData(libraryService);
+
         mainMenu(libraryService);
+
     }
 
-    public static void mainMenu(LibraryService libraryService) {
+    public static void mainMenu(LibraryService libraryService){
         Scanner scanner = new Scanner(System.in);
 
-        while (true) {
+        while(true) {
             System.out.println("\n──────── MAIN MENU ─────────");
-            System.out.println("[1] Books");
+            System.out.println("[1] Librarian Admin Menu");
+            System.out.println("[2] Member Login");
             System.out.println("[0] Exit");
+
+            String input = scanner.nextLine().trim();
+
+            switch (input) {
+                case "1":
+                    librarianMenu(libraryService,scanner);
+                    break;
+                case "2":
+                    System.out.println("Work in progress!");
+                    break;
+                case "0":
+                    System.out.println("Goodbye!");
+                    return;
+            }
+        }
+    }
+
+    public static void librarianMenu(LibraryService libraryService,Scanner scanner) {
+
+        while (true) {
+            System.out.println("\n──────── LIBRARIAN MENU ─────────");
+            System.out.println("[1] Books");
+            System.out.println("[b] Back");
 
             String input = scanner.nextLine().trim();
 
@@ -39,8 +64,7 @@ public class LibraryApp {
                 case "1":
                     booksMenu(libraryService, scanner);
                     break;
-                case "0":
-                    System.out.println("Goodbye!");
+                case "b":
                     return;
             }
         }
@@ -83,7 +107,7 @@ public class LibraryApp {
 
 
     public static void addBook(LibraryService libraryService, Scanner scanner) {
-        System.out.println("\n--Add New Book -----------------");
+        System.out.println("\n── Add New Book ─────────────────");
         System.out.print("ISBN : ");
         String isbn = scanner.nextLine();
         System.out.print("Title : ");
@@ -115,7 +139,7 @@ public class LibraryApp {
     }
 
     public static void addCopy(LibraryService libraryService, Scanner scanner) {
-        System.out.println("\n--Add New Copy -----------------");
+        System.out.println("\n── Add New Copy ────────────────");
         System.out.println("Give the ISBN to add a new copy");
         String isbn = scanner.nextLine();
         System.out.println("Give the amount of copies you want to add");
@@ -133,9 +157,9 @@ public class LibraryApp {
     public static void viewBooks(LibraryService libraryService){
         Collection<Book> books = libraryService.getAllBooks();
 
-        System.out.println("\n──ALL BOOKS ────────────────");
+        System.out.println("\n── ALL BOOKS ────────────────");
         System.out.printf("  %-13s  %-30s  %-25s  %-18s %s%n",
-                "ISBN","Title","Author","Genre","Available");
+                "ISBN","Title","Author","Genre","Loan days");
         System.out.println("  " + "─".repeat(125));
 
         for(Book book : books){
@@ -146,7 +170,7 @@ public class LibraryApp {
 
 
     public static void getBookByIsbn(LibraryService libraryService,Scanner scanner){
-        System.out.println("\n──SEARCH BOOK BY ISBN ────────────────");
+        System.out.println("\n── SEARCH BOOK BY ISBN ────────────────");
         System.out.println("Search: ");
         String isbn = scanner.nextLine();
 
@@ -159,7 +183,7 @@ public class LibraryApp {
 
             System.out.printf("  %-13s  %-30s %-25s %d%n%n%n",searchedBook.getIsbn(),searchedBook.getTitle(),searchedBook.getAuthor(),copies.size());
 
-            System.out.println("\n──ALL COPIES ──────────────────");
+            System.out.println("\n── ALL COPIES ──────────────────");
             System.out.printf("  %-13s  %-30s %-25s %s%n","COPY-ID","Title","Author","STATUS");
             System.out.println("  " + "─".repeat(90));
 
