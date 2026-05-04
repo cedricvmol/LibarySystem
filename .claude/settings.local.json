@@ -5,7 +5,10 @@
       "mcp__claude_ai_Atlassian_Rovo__searchJiraIssuesUsingJql",
       "mcp__claude_ai_Atlassian_Rovo__getTransitionsForJiraIssue",
       "mcp__claude_ai_Atlassian_Rovo__transitionJiraIssue",
-      "mcp__claude_ai_Atlassian_Rovo__editJiraIssue"
+      "mcp__claude_ai_Atlassian_Rovo__editJiraIssue",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
     ]
   }
 }

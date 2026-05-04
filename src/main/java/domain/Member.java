@@ -7,9 +7,11 @@ public class Member {
     private String address;
     private String email;
     private String phone;
+    private String password;
 
-    public Member(String memberId, String name, String address, String email, String phone) {
+    public Member(String memberId,String password, String name, String address, String email, String phone) {
         this.memberId = memberId;
+        this.password = password;
         this.name = name;
         this.address = address;
         this.email = email;
@@ -19,6 +21,8 @@ public class Member {
     public String getMemberId() {
         return memberId;
     }
+
+    public String getPassword() { return password; }
 
     public String getName() {
         return name;
