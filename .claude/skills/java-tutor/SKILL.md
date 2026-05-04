@@ -1,3 +1,4 @@
+
 ---
 name: java-tutor
 description: >
@@ -38,7 +39,7 @@ they're in, and focus on the matching section.
 | 1 — Ideation | Finished a project, wants something new, "what should I build next?" | Project Ideation |
 | 2 — Design | Project idea chosen, needs architecture and iteration planning | Project Design |
 | 3 — Implementation | Actively coding, stuck, asking for hints or review | Implementation Guide |
-| 4 — Wrap-up | All iterations complete | Update the Concepts Atlas, then transition to Phase 1 |
+| 4 — Wrap-up | An iteration is complete | Update docs, update Concepts Atlas. If all iterations done, transition to Phase 1 |
 
 Always check the Concepts Atlas when you need to know what the student already
 knows. Never re-teach concepts that are already there unless they ask.
@@ -69,6 +70,7 @@ After the iteration plan is agreed upon, create tickets:
 - Verify all tasks and stories are in Done
 - Transition the epic to Done
 - The board should be clean before starting a new project
+- Generate or update iteration docs (see Documentation section)
 ### Jira Conventions
 - Use the project key from the Java-learn board for all ticket creation
 - Use `searchJiraIssuesUsingJql` to check existing tickets before creating duplicates
@@ -230,6 +232,48 @@ app is connected. If a commit spans multiple subtasks, list all keys: `KAN-8 KAN
 
 ---
 
+## Documentation
+
+At the end of each iteration, generate or update the following files in `docs/`.
+Read the current code, git log, and existing docs before writing — don't invent
+content, derive it from what was actually built.
+
+### Files to maintain
+
+**`docs/project-overview.md`** — created at project kickoff, updated when
+architecture or scope changes. Sections: project goal, domain summary, layered
+architecture, iteration plan (table with iteration number, theme, status).
+
+**`docs/domain-model.md`** — updated whenever domain classes change. For each
+class: responsibility, key fields, key methods, relationships to other classes.
+
+**`docs/iteration-N-summary.md`** — created at the end of iteration N.
+
+Template:
+```
+# Iteration N – <Theme>
+
+## What was built
+- <bullet per feature/method implemented>
+
+## Key decisions
+- <notable design choices made during this iteration>
+
+## Concepts practiced
+- <Java concepts applied, with a one-line note on how>
+
+## Known limitations / next steps
+- <anything deferred, placeholder checks, or left for a future iteration>
+```
+
+### Rules
+- Write from facts: read the code and git log, don't summarize from memory
+- Keep it concise — a developer should be able to scan it in 2 minutes
+- Update `project-overview.md` iteration table status to "Done" for the completed iteration
+- Never generate docs for an iteration that isn't complete yet
+
+---
+
 ## Concepts Atlas
 
 What the student has already learned, organized by category. Update this after
@@ -240,7 +284,7 @@ use guiding mode, not teaching mode.
 - Classes, fields, methods, constructors
 - Scanner for user input, while loops, switch statements
 - String immutability (toLowerCase() must be reassigned)
-- Static methods, overloaded constructors
+- Static methods, overloaded constructors and methods
 - System.out.printf with fixed-width columns, String.format()
 - Enums for fixed constants (e.g. TransactionType)
 - LocalDateTime and DateTimeFormatter
@@ -267,15 +311,18 @@ use guiding mode, not teaching mode.
 - LocalDateTime.parse() for timestamp deserialization
 ### Testing
 - JUnit 5 setup, @Test, @BeforeEach
-- assertEquals, assertTrue, assertFalse
+- assertEquals, assertTrue, assertFalse, assertThrows
 - AAA pattern, one test class per domain class
 - Test isolation, testing via public methods only
+- Lambda syntax as argument to assertThrows (preview — full lambdas in iteration 3)
 ### Architecture & Design
 - Service layer pattern (service between UI and domain)
+- Facade pattern — single service (LibraryService) as entry point for UI; individual services never called directly from UI
 - UI layer: only input/output, no business logic
 - Domain classes: no console output
 - Storage calls wrapped through service layer
 - Boolean flag pattern, static application state
+- ConcurrentModificationException — can't remove from a collection while iterating; use two-pass approach (collect keys, then remove)
 ### Database & Persistence
 - SQLite embedded DB, JDBC driver via Maven
 - Connection, Statement, PreparedStatement, ResultSet
