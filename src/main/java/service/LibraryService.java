@@ -19,11 +19,11 @@ public class LibraryService {
     }
 
     public void addBook(String isbn, String title, String genre, String author, String language, String publisher, int loanPeriodDays) {
-        bookService.addBook(isbn, title, genre, author, language, publisher, loanPeriodDays);
+        bookService.addBook(new Book(isbn, title, genre, author, language, publisher, loanPeriodDays));
     }
 
     public void addBook(String isbn, String title, String genre, String author, String language, String publisher) {
-        bookService.addBook(isbn, title, genre, author, language, publisher, 14);
+        bookService.addBook(new Book(isbn, title, genre, author, language, publisher, 14));
     }
 
     public void addCopies(String isbn, int amount) {
