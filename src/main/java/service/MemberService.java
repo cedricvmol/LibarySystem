@@ -2,9 +2,7 @@ package service;
 
 import domain.Member;
 
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 public class MemberService {
 
@@ -23,5 +21,16 @@ public class MemberService {
             return Optional.of(members.get(memberId));
         }
         return Optional.empty();
+    }
+
+    public Collection<Member> getAllMembers(){
+        return new ArrayList<>(members.values());
+    }
+
+    public void removeMember(String memberId){
+        if(!members.containsKey(memberId)){
+            throw new IllegalArgumentException("Member with id: " + memberId + " does not exists.");
+        }
+        members.remove(memberId);
     }
 }

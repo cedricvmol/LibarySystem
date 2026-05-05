@@ -54,4 +54,14 @@ public class LibraryService {
         return memberService.getMember(memberId);
     }
 
+    public Collection<Member> getAllMembers(){
+        return memberService.getAllMembers();
+    }
+
+    public void removeMember(String memberId){
+        memberService.removeMember(memberId);
+    }
+
+
+
 }
