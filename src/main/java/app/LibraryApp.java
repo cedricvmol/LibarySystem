@@ -47,9 +47,6 @@ public class LibraryApp {
         }
     }
 
-
-
-
     public static void addTestData(LibraryService libraryService){
 
         libraryService.addBook("9780261103573", "The Fellowship of the Ring", "Fantasy", "J.R.R. Tolkien", "English", "HarperCollins");
@@ -73,6 +70,12 @@ public class LibraryApp {
         libraryService.addCopies("9780525559474",7);
         libraryService.addCopies("9780316769174",6);
 
+
+        libraryService.registerMember("US01", "admin", "Alice Johnson", "123 Maple Street, Springfield", "alice.johnson@email.com", "+1-555-234-5678");
+        libraryService.registerMember("US02", "admin", "Bob Smith", "456 Oak Avenue, Shelbyville", "bob.smith@email.com", "+1-555-876-5432");
+        libraryService.registerMember("US03", "admin", "Carlos Rivera", "789 Pine Road, Capital City", "carlos.rivera@email.com", "+34-612-345-678");
+        libraryService.registerMember("US04", "admin", "Diana Lee", "10 Elm Court, Apt 3B, Metropolis", "diana.lee@email.com", "+44-7911-123456");
+        libraryService.registerMember("US05", "admin", "Emma Patel", "55 Birch Lane, Gotham", "emma.patel@email.com", "+91-98765-43210");
 
 
     }

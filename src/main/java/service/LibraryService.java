@@ -18,50 +18,50 @@ public class LibraryService {
         this.loanService = loanService;
     }
 
-    public void addBook(String isbn,String title,String genre,String author,String language,String publisher,int loanPeriodDays){
-        bookService.addBook(isbn,title,genre,author,language,publisher,loanPeriodDays);
-    }
-    public void addBook(String isbn,String title,String genre,String author,String language,String publisher){
-        bookService.addBook(isbn,title,genre,author,language,publisher,14);
+    public void addBook(String isbn, String title, String genre, String author, String language, String publisher, int loanPeriodDays) {
+        bookService.addBook(isbn, title, genre, author, language, publisher, loanPeriodDays);
     }
 
-    public void addCopies(String isbn,int amount){
-        bookService.addCopies(isbn,amount);
+    public void addBook(String isbn, String title, String genre, String author, String language, String publisher) {
+        bookService.addBook(isbn, title, genre, author, language, publisher, 14);
     }
 
-    public Collection<Book> getAllBooks(){
+    public void addCopies(String isbn, int amount) {
+        bookService.addCopies(isbn, amount);
+    }
+
+    public Collection<Book> getAllBooks() {
         return bookService.getAllBooks();
     }
 
-    public Book getBook(String isbn){
+    public Book getBook(String isbn) {
         return bookService.getBook(isbn);
     }
 
-    public Collection<BookCopy> getAllCopies(String isbn){
+    public Collection<BookCopy> getAllCopies(String isbn) {
         return bookService.getAllCopiesForBook(isbn);
     }
 
-    public void removeBook(String isbn){
+    public void removeBook(String isbn) {
         bookService.removeBook(isbn);
     }
 
 
-    public void registerMember(String memberId, String password, String name, String address, String email, String phone){
-        memberService.registerMember(new Member(memberId,password,name,address,email,phone));
+    public void registerMember(String memberId, String password, String name, String address, String email, String phone) {
+        memberService.registerMember(new Member(memberId, password, name, address, email, phone));
     }
 
-    public Optional<Member> getMember(String memberId){
+    public Optional<Member> getMember(String memberId) {
         return memberService.getMember(memberId);
     }
 
-    public Collection<Member> getAllMembers(){
+    public Collection<Member> getAllMembers() {
         return memberService.getAllMembers();
     }
 
-    public void removeMember(String memberId){
+    public void removeMember(String memberId) {
         memberService.removeMember(memberId);
     }
-
 
 
 }

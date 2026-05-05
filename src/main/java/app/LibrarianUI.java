@@ -25,7 +25,7 @@ public class LibrarianUI {
                     booksMenu(libraryService, scanner);
                     break;
                 case "2":
-                    membersMenu(libraryService,scanner);
+                    membersMenu(libraryService, scanner);
                     break;
                 case "b":
                     return;
@@ -88,7 +88,7 @@ public class LibrarianUI {
 
     }
 
-    public static void registerMember(LibraryService libraryService, Scanner scanner){
+    public static void registerMember(LibraryService libraryService, Scanner scanner) {
 
         System.out.println("\n── Register Member ─────────────────");
         System.out.print("Member ID: ");
@@ -105,8 +105,8 @@ public class LibrarianUI {
         String phone = scanner.nextLine();
 
         try {
-            libraryService.registerMember(memberId,password,name,address,email,phone);
-        } catch (IllegalArgumentException e){
+            libraryService.registerMember(memberId, password, name, address, email, phone);
+        } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
 

@@ -11,7 +11,7 @@ public class Book {
     private int loanPeriodDays;
 
 
-    public Book(String isbn, String title, String genre, String author, String language, String publisher,int loanPeriodDays) {
+    public Book(String isbn, String title, String genre, String author, String language, String publisher, int loanPeriodDays) {
         this.isbn = isbn;
         this.title = title;
         this.genre = genre;
@@ -22,7 +22,7 @@ public class Book {
     }
 
     public Book(String isbn, String title, String genre, String author, String language, String publisher) {
-        this(isbn,title,genre,author,language,publisher,14);
+        this(isbn, title, genre, author, language, publisher, 14);
 
     }
 
@@ -50,7 +50,7 @@ public class Book {
         return genre;
     }
 
-    public int getLoanPeriodDays(){
+    public int getLoanPeriodDays() {
         return loanPeriodDays;
     }
 }

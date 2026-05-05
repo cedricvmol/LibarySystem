@@ -20,18 +20,18 @@ public class BookService {
         this.bookCopies = new HashMap<>();
     }
 
-    public void addBook(String isbn, String title, String genre, String author, String language, String publisher,int loanPeriodDays) {
+    public void addBook(String isbn, String title, String genre, String author, String language, String publisher, int loanPeriodDays) {
         if (books.containsKey(isbn)) {
             throw new IllegalArgumentException("Book with ISBN: " + isbn + " is already registered.");
         }
-        books.put(isbn, new Book(isbn, title, genre, author, language, publisher,loanPeriodDays));
+        books.put(isbn, new Book(isbn, title, genre, author, language, publisher, loanPeriodDays));
     }
 
     public void addBook(String isbn, String title, String genre, String author, String language, String publisher) {
         if (books.containsKey(isbn)) {
             throw new IllegalArgumentException("Book with ISBN: " + isbn + " is already registered.");
         }
-        books.put(isbn, new Book(isbn, title, genre, author, language, publisher,14));
+        books.put(isbn, new Book(isbn, title, genre, author, language, publisher, 14));
     }
 
     public void addCopies(String isbn, int amount) {
@@ -59,21 +59,21 @@ public class BookService {
     }
 
 
-    public void removeBook(String isbn){
+    public void removeBook(String isbn) {
         if (!books.containsKey(isbn)) {
             throw new IllegalArgumentException("Book with ISBN: " + isbn + " is not yet registered in the library.");
         }
 
         ArrayList<String> copiesIdToRemove = new ArrayList<>();
-        for (BookCopy copy : bookCopies.values()){
-            if(copy.getBook().getIsbn().equals(isbn)){
-                if(copy.getStatus().equals(CopyStatus.BORROWED)){
+        for (BookCopy copy : bookCopies.values()) {
+            if (copy.getBook().getIsbn().equals(isbn)) {
+                if (copy.getStatus().equals(CopyStatus.BORROWED)) {
                     throw new IllegalArgumentException("We cannot remove this book. They are still copies that have an active loan.");
                 }
                 copiesIdToRemove.add(copy.getCopyId());
             }
         }
-        for (String ids : copiesIdToRemove){
+        for (String ids : copiesIdToRemove) {
             bookCopies.remove(ids);
         }
 

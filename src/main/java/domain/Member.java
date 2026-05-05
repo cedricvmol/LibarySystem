@@ -9,7 +9,7 @@ public class Member {
     private String phone;
     private String password;
 
-    public Member(String memberId,String password, String name, String address, String email, String phone) {
+    public Member(String memberId, String password, String name, String address, String email, String phone) {
         this.memberId = memberId;
         this.password = password;
         this.name = name;
@@ -22,7 +22,9 @@ public class Member {
         return memberId;
     }
 
-    public String getPassword() { return password; }
+    public String getPassword() {
+        return password;
+    }
 
     public String getName() {
         return name;
