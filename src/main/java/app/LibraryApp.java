@@ -38,7 +38,7 @@ public class LibraryApp {
                     LibrarianUI.librarianMenu(libraryService,scanner);
                     break;
                 case "2":
-                    System.out.println("Work in progress!");
+                    MemberUI.memberMenu(libraryService,scanner);
                     break;
                 case "0":
                     System.out.println("Goodbye!");

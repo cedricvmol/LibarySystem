@@ -9,6 +9,9 @@ public class MemberService {
     private HashMap<String, Member> members;
 
 
+    public MemberService(){
+        this.members = new HashMap<>();
+    }
     public void registerMember(Member member){
         if(members.containsKey(member.getMemberId())){
             throw new IllegalArgumentException("Member with id: " + member.getMemberId() + " already exists.");
@@ -29,7 +32,7 @@ public class MemberService {
 
     public void removeMember(String memberId){
         if(!members.containsKey(memberId)){
-            throw new IllegalArgumentException("Member with id: " + memberId + " does not exists.");
+            throw new IllegalArgumentException("Member with id: " + memberId + " does not exist.");
         }
         members.remove(memberId);
     }
