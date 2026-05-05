@@ -2,9 +2,11 @@ package app;
 
 import domain.Book;
 import domain.BookCopy;
+import domain.Member;
 import service.LibraryService;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class LibrarianUI {
@@ -72,7 +74,9 @@ public class LibrarianUI {
 
         while (true) {
             System.out.println("\n──MEMBER MANAGEMENT ────────────────");
-            System.out.println("[1] Register member");
+            System.out.println("[1] Register Member");
+            System.out.println("[2] View All Members");
+            System.out.println("[3] Remove Member");
             System.out.println("[b] Back");
 
             String input = scanner.nextLine().trim();
@@ -80,6 +84,12 @@ public class LibrarianUI {
             switch (input) {
                 case "1":
                     registerMember(libraryService, scanner);
+                    break;
+                case "2":
+                    viewAllMembers(libraryService);
+                    break;
+                case "3":
+                    removeMember(libraryService,scanner);
                     break;
                 case "b":
                     return;
@@ -110,6 +120,39 @@ public class LibrarianUI {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    public static void viewAllMembers(LibraryService libraryService) {
+
+        Collection<Member> members = libraryService.getAllMembers();
+
+        System.out.println("\n── ALL MEMBERS ────────────────");
+        System.out.printf("  %-13s  %-20s  %-40s  %-25s %s%n",
+                "Member ID", "Name", "Address", "Email", "Phone number");
+        System.out.println("  " + "─".repeat(125));
+
+        for (Member member : members) {
+            System.out.printf("  %-13s  %-20s  %-40s  %-25s %s%n",
+                    member.getMemberId(), member.getName(), member.getAddress(), member.getEmail(), member.getPhone());
+        }
+    }
+
+    public static void removeMember(LibraryService libraryService, Scanner scanner) {
+        System.out.println("\n──REMOVE MEMBER ────────────────");
+        System.out.println("Give the Member ID of the member you want to remove:");
+        String memberId = scanner.nextLine();
+
+        Optional<Member> result = libraryService.getMember(memberId);
+
+        if (result.isPresent()) {
+            libraryService.removeMember(memberId);
+            System.out.println("  Successfully removed the following member:");
+            System.out.printf("  %-13s  %-30s  %n", "Member ID", "Name");
+            System.out.println("  " + "─".repeat(45));
+            System.out.printf("  %-13s  %-30s%n%n%n", result.get().getMemberId(), result.get().getName());
+        } else {
+            System.out.println("The member was not found.");
+        }
     }
 
     public static void addBook(LibraryService libraryService, Scanner scanner) {
