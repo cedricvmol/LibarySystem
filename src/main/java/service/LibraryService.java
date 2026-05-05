@@ -2,6 +2,7 @@ package service;
 
 import domain.Book;
 import domain.BookCopy;
+import domain.Member;
 
 import java.util.Collection;
 
@@ -42,4 +43,10 @@ public class LibraryService {
     public void removeBook(String isbn){
         bookService.removeBook(isbn);
     }
+
+
+    public void registerMember(String memberId, String password, String name, String address, String email, String phone){
+        memberService.registerMember(new Member(memberId,password,name,address,email,phone));
+    }
+
 }
