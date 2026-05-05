@@ -5,6 +5,7 @@ import domain.BookCopy;
 import domain.Member;
 
 import java.util.Collection;
+import java.util.Optional;
 
 public class LibraryService {
     private MemberService memberService;
@@ -47,6 +48,10 @@ public class LibraryService {
 
     public void registerMember(String memberId, String password, String name, String address, String email, String phone){
         memberService.registerMember(new Member(memberId,password,name,address,email,phone));
+    }
+
+    public Optional<Member> getMember(String memberId){
+        return memberService.getMember(memberId);
     }
 
 }

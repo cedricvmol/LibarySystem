@@ -3,6 +3,8 @@ package service;
 import domain.Member;
 
 import java.util.HashMap;
+import java.util.Objects;
+import java.util.Optional;
 
 public class MemberService {
 
@@ -16,4 +18,10 @@ public class MemberService {
         members.put(member.getMemberId(),member);
     }
 
+    public Optional<Member> getMember(String memberId){
+        if(members.containsKey(memberId)){
+            return Optional.of(members.get(memberId));
+        }
+        return Optional.empty();
+    }
 }
