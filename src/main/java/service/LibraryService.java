@@ -2,9 +2,11 @@ package service;
 
 import domain.Book;
 import domain.BookCopy;
+import domain.BookLoan;
 import domain.Member;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 public class LibraryService {
@@ -65,6 +67,10 @@ public class LibraryService {
 
     public void borrowBook(Member member, String isbn){
         loanService.borrowBook(member,isbn);
+    }
+
+    public List<BookLoan> getActiveLoansForMember(String memberId){
+        return loanService.getActiveLoansForMember(memberId);
     }
 
 

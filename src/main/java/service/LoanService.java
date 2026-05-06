@@ -35,6 +35,17 @@ public class LoanService {
         throw new IllegalArgumentException("There is no copy available to borrow for this book.");
     }
 
+    public List<BookLoan> getActiveLoansForMember(String memberId){
+        List<BookLoan> loansForMember = new ArrayList<>();
+
+        for(BookLoan loan : loans){
+            if(loan.getMember().getMemberId().equals(memberId) && (!loan.isReturned())){
+                loansForMember.add(loan);
+            }
+        }
+        return loansForMember;
+    }
+
     public String loanIdGenerator() {
         Random random = new Random();
         StringBuilder id = new StringBuilder();
