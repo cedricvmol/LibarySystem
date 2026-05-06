@@ -1,9 +1,12 @@
 package app;
 
+import domain.Member;
 import service.BookService;
 import service.LibraryService;
 import service.LoanService;
 import service.MemberService;
+
+import java.util.Optional;
 import java.util.Scanner;
 
 public class LibraryApp {
@@ -12,10 +15,11 @@ public class LibraryApp {
     public static void main(String[] args) {
 
         MemberService memberService = new MemberService();
-        LoanService loanService = new LoanService();
         BookService bookService = new BookService();
+        LoanService loanService = new LoanService(bookService);
 
         LibraryService libraryService = new LibraryService(memberService, bookService, loanService);
+
         addTestData(libraryService);
 
         mainMenu(libraryService);
@@ -78,6 +82,7 @@ public class LibraryApp {
         libraryService.registerMember("US05", "admin", "Emma Patel", "55 Birch Lane, Gotham", "emma.patel@email.com", "+91-98765-43210");
 
 
+        libraryService.borrowBook(libraryService.getMember("US05").get(),"9780316769174");
     }
 
 

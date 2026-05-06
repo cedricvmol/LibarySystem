@@ -63,5 +63,9 @@ public class LibraryService {
         memberService.removeMember(memberId);
     }
 
+    public void borrowBook(Member member, String isbn){
+        loanService.borrowBook(member,isbn);
+    }
+
 
 }
