@@ -62,7 +62,11 @@ public class LibraryService {
     }
 
     public void removeMember(String memberId) {
+        if(!loanService.getActiveLoansForMember(memberId).isEmpty()){
+            throw new IllegalStateException("Member has still an active loan.");
+        }
         memberService.removeMember(memberId);
+
     }
 
     public void borrowBook(Member member, String isbn){

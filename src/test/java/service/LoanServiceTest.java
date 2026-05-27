@@ -17,7 +17,6 @@ public class LoanServiceTest {
     private Book book;
 
 
-
     @BeforeEach
     void setup(){
         bookService = new BookService();
@@ -43,9 +42,7 @@ public class LoanServiceTest {
                 foundBorrowedCopy = true;
             }
         }
-
         assertTrue(foundBorrowedCopy);
-
     }
 
     @Test
@@ -78,8 +75,6 @@ public class LoanServiceTest {
         loanService.borrowBook(member,book3.getIsbn());
 
         assertEquals(4,loanService.getActiveLoansForMember(member.getMemberId()).size());
-
-
     }
 
     @Test

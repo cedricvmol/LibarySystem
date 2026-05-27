@@ -10,7 +10,13 @@
       "Bash(git commit -m ' *)",
       "Bash(git push *)",
       "mcp__claude_ai_Atlassian_Rovo__getJiraIssue",
-      "mcp__claude_ai_Atlassian_Rovo__createJiraIssue"
+      "mcp__claude_ai_Atlassian_Rovo__createJiraIssue",
+      "PowerShell($data = Get-Content \"C:\\\\Users\\\\vanmo\\\\.claude\\\\projects\\\\C--Users-vanmo-IdeaProjects-LibarySystem\\\\fae78f2b-33b1-44b9-8387-36ebfefc8bd4\\\\tool-results\\\\mcp-claude_ai_Atlassian_Rovo-searchJiraIssuesUsingJql-1779270547090.txt\" | ConvertFrom-Json; $node = $data.issues.nodes[30]; $node | ConvertTo-Json -Depth 5)",
+      "PowerShell(git config *)",
+      "PowerShell(git remote *)",
+      "Bash(mvn test *)",
+      "PowerShell(mvn test *)",
+      "Bash(git commit *)"
     ]
   }
 }

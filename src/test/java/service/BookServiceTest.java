@@ -1,6 +1,7 @@
 package service;
 
 
+import domain.Book;
 import domain.BookCopy;
 import domain.CopyStatus;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,34 +25,39 @@ public class BookServiceTest {
 
     @Test
     void testAddBook(){
-        bookService.addBook("9780261103573", "The Fellowship of the Ring", "Fantasy", "J.R.R. Tolkien", "English", "HarperCollins",14);
+        Book book = new Book("9780261103573", "The Fellowship of the Ring", "Fantasy", "J.R.R. Tolkien", "English", "HarperCollins",14);
+        bookService.addBook(book);
         assertEquals(1,bookService.getAllBooks().size());
     }
 
     @Test
     void testAddBookDuplicateIsbn(){
-        bookService.addBook("9780743273565", "The Great Gatsby", "Classic", "F. Scott Fitzgerald", "English", "Scribner",14);
+        Book book = new Book("9780743273565", "The Great Gatsby", "Classic", "F. Scott Fitzgerald", "English", "Scribner",14);
+        bookService.addBook(book);
 
         assertThrows(IllegalArgumentException.class, () -> {
-            bookService.addBook("9780743273565", "The Handmaid's Tale", "Dystopian", "Margaret Atwood", "English", "Anchor Books",15);
+            bookService.addBook(book);
         });
     }
 
     @Test
     void testAddBookDefaultLoanPeriod(){
-        bookService.addBook("9780743273565", "The Great Gatsby", "Classic", "F. Scott Fitzgerald", "English", "Scribner");
+        Book book = new Book("9780743273565", "The Great Gatsby", "Classic", "F. Scott Fitzgerald", "English", "Scribner",14);
+        bookService.addBook(book);
         assertEquals(14,bookService.getBook("9780743273565").getLoanPeriodDays());
     }
 
     @Test
     void testGetBook(){
-        bookService.addBook("9780261103573", "The Fellowship of the Ring", "Fantasy", "J.R.R. Tolkien", "English", "HarperCollins",14);
+        Book book = new Book("9780261103573", "The Fellowship of the Ring", "Fantasy", "J.R.R. Tolkien", "English", "HarperCollins",14);
+        bookService.addBook(book);
         assertEquals("The Fellowship of the Ring",bookService.getBook("9780261103573").getTitle());
     }
 
     @Test
     void testGetBookWithUnknowIsbn(){
-        bookService.addBook("9780261103573", "The Fellowship of the Ring", "Fantasy", "J.R.R. Tolkien", "English", "HarperCollins",14);
+        Book book = new Book("9780261103573", "The Fellowship of the Ring", "Fantasy", "J.R.R. Tolkien", "English", "HarperCollins",14);
+        bookService.addBook(book);
         assertThrows(IllegalArgumentException.class , () -> {
             bookService.getBook("9780261103500");
         });
@@ -59,18 +65,23 @@ public class BookServiceTest {
 
     @Test
     void testGetAllBooksCorrectSize(){
-        bookService.addBook("9780261103573", "The Fellowship of the Ring", "Fantasy", "J.R.R. Tolkien", "English", "HarperCollins");
-        bookService.addBook("9780743273565", "The Great Gatsby", "Classic", "F. Scott Fitzgerald", "English", "Scribner");
-        bookService.addBook("9780385333481", "The Handmaid's Tale", "Dystopian", "Margaret Atwood", "English", "Anchor Books");
-        bookService.addBook("9780679720201", "Crime and Punishment", "Classic", "Fyodor Dostoevsky", "English", "Vintage Books",15);
+        Book book = new Book("9780261103573", "The Fellowship of the Ring", "Fantasy", "J.R.R. Tolkien", "English", "HarperCollins");
+        Book book1 = new Book("9780743273565", "The Great Gatsby", "Classic", "F. Scott Fitzgerald", "English", "Scribner");
+        Book book2 = new Book("9780385333481", "The Handmaid's Tale", "Dystopian", "Margaret Atwood", "English", "Anchor Books");
+        Book book3 = new Book("9780679720201", "Crime and Punishment", "Classic", "Fyodor Dostoevsky", "English", "Vintage Books",15);
+        bookService.addBook(book);
+        bookService.addBook(book1);
+        bookService.addBook(book2);
+        bookService.addBook(book3);
         assertEquals(4,bookService.getAllBooks().size());
     }
 
     @Test
     void testAddCopy(){
-        bookService.addBook("9780743273565", "The Great Gatsby", "Classic", "F. Scott Fitzgerald", "English", "Scribner");
-        bookService.addCopies("9780743273565",15);
-        assertEquals(15,bookService.getAllCopiesForBook("9780743273565").size());
+        Book book = new Book("9780261103573", "The Fellowship of the Ring", "Fantasy", "J.R.R. Tolkien", "English", "HarperCollins");
+        bookService.addBook(book);
+        bookService.addCopies("9780261103573",15);
+        assertEquals(15,bookService.getAllCopiesForBook("9780261103573").size());
     }
 
     @Test
@@ -82,7 +93,8 @@ public class BookServiceTest {
 
     @Test
     void getAllCopiesForBookForNonExistingIsbn(){
-        bookService.addBook("9780743273565", "The Great Gatsby", "Classic", "F. Scott Fitzgerald", "English", "Scribner");
+        Book book1 = new Book("9780743273565", "The Great Gatsby", "Classic", "F. Scott Fitzgerald", "English", "Scribner");
+        bookService.addBook(book1);
         assertThrows(IllegalArgumentException.class, () -> {
             bookService.getAllCopiesForBook("9780743273500");
         });
@@ -91,7 +103,8 @@ public class BookServiceTest {
 
     @Test
     void getAllCopiesForBookWithNoCopies(){
-        bookService.addBook("9780743273565", "The Great Gatsby", "Classic", "F. Scott Fitzgerald", "English", "Scribner");
+        Book book1 = new Book("9780743273565", "The Great Gatsby", "Classic", "F. Scott Fitzgerald", "English", "Scribner");
+        bookService.addBook(book1);
         assertThrows(IllegalArgumentException.class, () -> {
             bookService.getAllCopiesForBook("9780743273565");
         });
@@ -99,7 +112,8 @@ public class BookServiceTest {
 
     @Test
     void removeBook(){
-        bookService.addBook("9780743273565", "The Great Gatsby", "Classic", "F. Scott Fitzgerald", "English", "Scribner");
+        Book book1 = new Book("9780743273565", "The Great Gatsby", "Classic", "F. Scott Fitzgerald", "English", "Scribner");
+        bookService.addBook(book1);
         bookService.addCopies("9780743273565",10);
         bookService.removeBook("9780743273565");
 
@@ -111,7 +125,8 @@ public class BookServiceTest {
 
     @Test
     void removeBookWithUnknowIsbn(){
-        bookService.addBook("9780743273565", "The Great Gatsby", "Classic", "F. Scott Fitzgerald", "English", "Scribner");
+        Book book1 = new Book("9780743273565", "The Great Gatsby", "Classic", "F. Scott Fitzgerald", "English", "Scribner");
+        bookService.addBook(book1);
 
         assertThrows(IllegalArgumentException.class,()->{
             bookService.removeBook("9780743273500");
@@ -120,7 +135,8 @@ public class BookServiceTest {
 
     @Test
     void removeBookWithBorrowedState(){
-        bookService.addBook("9780743273565", "The Great Gatsby", "Classic", "F. Scott Fitzgerald", "English", "Scribner");
+        Book book1 = new Book("9780743273565", "The Great Gatsby", "Classic", "F. Scott Fitzgerald", "English", "Scribner");
+        bookService.addBook(book1);
         bookService.addCopies("9780743273565",2);
         ArrayList<BookCopy> copies = (ArrayList<BookCopy>) bookService.getAllCopiesForBook("9780743273565");
         copies.getFirst().setStatus(CopyStatus.BORROWED);
