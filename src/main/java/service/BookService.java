@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.function.Predicate;
 
 public class BookService {
 
@@ -89,6 +90,30 @@ public class BookService {
             throw new IllegalArgumentException("There are no book copies for the following isbn code: " + isbn);
         }
         return copies;
+    }
+
+    public Collection<Book> searchBooks(String query, String field){
+        Predicate<Book> predicate = null;
+        String queryLower = query.toLowerCase();
+        Collection<Book> bookSearchResult = new ArrayList<>();
+        switch (field){
+            case "title" :
+                predicate = book -> book.getTitle().toLowerCase().contains(queryLower);
+                break;
+            case "author" :
+                predicate = book -> book.getAuthor().toLowerCase().contains(queryLower);
+                break;
+            case "genre" :
+                predicate = book -> book.getGenre().toLowerCase().contains(queryLower);
+                break;
+            default: throw new IllegalArgumentException("Give a correct field.");
+        }
+
+        for (Book book : books.values()){
+            if(predicate.test(book)) bookSearchResult.add(book);
+
+        }
+        return bookSearchResult;
     }
 
     public String copyIdGenerator() {

@@ -146,5 +146,36 @@ public class BookServiceTest {
         });
     }
 
+    @Test
+    void searchBookWithTitle(){
+        Book book1 = new Book("9780743273565", "The Great Gatsby", "Classic", "F. Scott Fitzgerald", "English", "Scribner");
+        bookService.addBook(book1);
+        assertEquals(1,bookService.searchBooks("Great", "title").size());
+    }
+
+    @Test
+    void searchBookWithAuthor(){
+        Book book1 = new Book("9780743273565", "The Great Gatsby", "Classic", "F. Scott Fitzgerald", "English", "Scribner");
+        bookService.addBook(book1);
+        assertEquals(1,bookService.searchBooks("Scott", "author").size());
+    }
+
+    @Test
+    void searchBookWithGenre(){
+        Book book1 = new Book("9780743273565", "The Great Gatsby", "Classic", "F. Scott Fitzgerald", "English", "Scribner");
+        bookService.addBook(book1);
+        assertEquals(1,bookService.searchBooks("Classic", "genre").size());
+    }
+
+    @Test
+    void searchBookWithInvalidField(){
+        Book book1 = new Book("9780743273565", "The Great Gatsby", "Classic", "F. Scott Fitzgerald", "English", "Scribner");
+        bookService.addBook(book1);
+        assertThrows(IllegalArgumentException.class, () -> {
+            bookService.searchBooks("Classic","xxx");
+        });
+
+    }
+
 
 }
