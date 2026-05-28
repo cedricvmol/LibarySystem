@@ -81,8 +81,7 @@ public class LibraryApp {
         libraryService.registerMember("US04", "admin", "Diana Lee", "10 Elm Court, Apt 3B, Metropolis", "diana.lee@email.com", "+44-7911-123456");
         libraryService.registerMember("US05", "admin", "Emma Patel", "55 Birch Lane, Gotham", "emma.patel@email.com", "+91-98765-43210");
 
-
-        libraryService.borrowBook(libraryService.getMember("US05").get(),"9780316769174");
+        libraryService.borrowBook("US05","9780316769174");
     }
 
 

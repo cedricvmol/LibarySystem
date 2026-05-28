@@ -7,6 +7,7 @@ import domain.Member;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 public class LibraryService {
@@ -69,12 +70,20 @@ public class LibraryService {
 
     }
 
-    public void borrowBook(Member member, String isbn){
-        loanService.borrowBook(member,isbn);
+    public void borrowBook(String memberId, String isbn){
+        Optional<Member> result = memberService.getMember(memberId);
+        if(result.isEmpty()){
+           throw new NoSuchElementException("The member does not exist.");
+        }
+        loanService.borrowBook(result.get(),isbn);
     }
 
     public List<BookLoan> getActiveLoansForMember(String memberId){
         return loanService.getActiveLoansForMember(memberId);
+    }
+
+    public Collection<Book> searchBooks(String query , String field){
+        return bookService.searchBooks(query,field);
     }
 
 
