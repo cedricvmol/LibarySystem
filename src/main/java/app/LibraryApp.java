@@ -21,7 +21,6 @@ public class LibraryApp {
         LibraryService libraryService = new LibraryService(memberService, bookService, loanService);
 
         addTestData(libraryService);
-
         mainMenu(libraryService);
 
     }

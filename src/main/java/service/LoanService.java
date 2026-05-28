@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class LoanService {
 
@@ -36,14 +37,7 @@ public class LoanService {
     }
 
     public List<BookLoan> getActiveLoansForMember(String memberId){
-        List<BookLoan> loansForMember = new ArrayList<>();
-
-        for(BookLoan loan : loans){
-            if(loan.getMember().getMemberId().equals(memberId) && (!loan.isReturned())){
-                loansForMember.add(loan);
-            }
-        }
-        return loansForMember;
+        return loans.stream().filter(loan -> !loan.isReturned() && loan.getMember().getMemberId().equals(memberId)).collect(Collectors.toList());
     }
 
     public String loanIdGenerator() {

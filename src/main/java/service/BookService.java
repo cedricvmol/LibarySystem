@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class BookService {
 
@@ -95,7 +96,7 @@ public class BookService {
     public Collection<Book> searchBooks(String query, String field){
         Predicate<Book> predicate = null;
         String queryLower = query.toLowerCase();
-        Collection<Book> bookSearchResult = new ArrayList<>();
+
         switch (field){
             case "title" :
                 predicate = book -> book.getTitle().toLowerCase().contains(queryLower);
@@ -109,11 +110,7 @@ public class BookService {
             default: throw new IllegalArgumentException("Give a correct field.");
         }
 
-        for (Book book : books.values()){
-            if(predicate.test(book)) bookSearchResult.add(book);
-
-        }
-        return bookSearchResult;
+        return books.values().stream().filter(predicate).collect(Collectors.toList());
     }
 
     public String copyIdGenerator() {
