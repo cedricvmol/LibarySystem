@@ -1,9 +1,6 @@
 package service;
 
-import domain.BookCopy;
-import domain.BookLoan;
-import domain.CopyStatus;
-import domain.Member;
+import domain.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -25,19 +22,18 @@ public class LoanService {
 
         Collection<BookCopy> copies = this.bookService.getAllCopiesForBook(isbn);
 
-        for (BookCopy copy : copies) {
-            if (copy.getStatus().equals(CopyStatus.AVAILABLE)) {
-                BookLoan bookLoan = new BookLoan(loanIdGenerator(), copy, member, LocalDate.now(), LocalDate.now().plusDays(copy.getBook().getLoanPeriodDays()));
-                copy.setStatus(CopyStatus.BORROWED);
-                loans.add(bookLoan);
-                return;
-            }
-        }
-        throw new IllegalArgumentException("There is no copy available to borrow for this book.");
+        BookCopy copy = copies.stream().filter(bookCopy -> bookCopy.getStatus().equals(CopyStatus.AVAILABLE)).findFirst().orElseThrow(()-> new IllegalArgumentException("No available copy."));
+        copy.setStatus(CopyStatus.BORROWED);
+        BookLoan loan = new BookLoan(loanIdGenerator(),copy,member,LocalDate.now(),LocalDate.now().plusDays(copy.getBook().getLoanPeriodDays()));
+        loans.add(loan);
     }
 
     public List<BookLoan> getActiveLoansForMember(String memberId){
         return loans.stream().filter(loan -> !loan.isReturned() && loan.getMember().getMemberId().equals(memberId)).collect(Collectors.toList());
+    }
+
+    public List<BookLoan> getAllActiveLoans(){
+        return loans.stream().filter(loan -> !loan.isReturned()).collect(Collectors.toList());
     }
 
     public String loanIdGenerator() {

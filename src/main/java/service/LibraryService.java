@@ -82,6 +82,10 @@ public class LibraryService {
         return loanService.getActiveLoansForMember(memberId);
     }
 
+    public List<BookLoan> getAllActiveLoans(){
+        return loanService.getAllActiveLoans();
+    }
+
     public Collection<Book> searchBooks(String query , String field){
         return bookService.searchBooks(query,field);
     }
