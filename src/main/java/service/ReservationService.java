@@ -4,6 +4,7 @@ import domain.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -35,15 +36,16 @@ public class ReservationService {
     }
 
     public List<Reservation> getPendingReservationsForMember(String memberId){
-        return reservations.stream().filter(reservation -> reservation.getMember().getMemberId().equals(memberId) && reservation.getReservationStatus().equals(ReservationStatus.PENDING)).collect(Collectors.toList());
+        return reservations.stream().filter(reservation -> reservation.getMember().getMemberId().equals(memberId) && reservation.getReservationStatus().equals(ReservationStatus.PENDING)).sorted(Comparator.comparing(Reservation::getReservationDate)).collect(Collectors.toList());
     }
 
     public List<Reservation> getAllPendingReservations(){
-        return reservations.stream().filter(reservation -> reservation.getReservationStatus().equals(ReservationStatus.PENDING)).collect(Collectors.toList());
+        return reservations.stream().filter(reservation -> reservation.getReservationStatus().equals(ReservationStatus.PENDING)).sorted(Comparator.comparing(Reservation::getReservationDate)).collect(Collectors.toList());
     }
 
     public void fulfillNextReservation(String isbn){
         reservations.stream().filter(reservation -> reservation.getBook().getIsbn().equals(isbn) && reservation.getReservationStatus().equals(ReservationStatus.PENDING))
+                .sorted(Comparator.comparing(Reservation::getReservationDate))
                 .findFirst()
                 .ifPresent(reservation -> reservation.setReservationStatus(ReservationStatus.FULFILLED));
     }

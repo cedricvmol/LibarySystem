@@ -113,6 +113,6 @@ public class LibraryService {
         reservationService.fulfillNextReservation(loanService.returnBook(loanId));
     }
 
-
+    
 
 }
