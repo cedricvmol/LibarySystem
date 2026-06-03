@@ -67,8 +67,7 @@ public class LoanServiceTest {
         Book book2 = new Book("9782070360024", "Le Petit Prince", "Fable", "Antoine de Saint-Exupéry", "French", "Gallimard");
         Book book3 = new Book("9788423335305", "Cien años de soledad", "Magical Realism", "Gabriel García Márquez", "Spanish", "Editorial Sudamericana", 21);
 
-        bookService.addBook(book1);
-        bookService.addCopies(book1.getIsbn(),2);
+
         bookService.addBook(book2);
         bookService.addCopies(book2.getIsbn(),2);
         bookService.addBook(book3);
@@ -110,11 +109,5 @@ public class LoanServiceTest {
 
         assertEquals(1,loanService.getAllActiveLoans().size());
     }
-
-
-
-
-
-
 
 }

@@ -2,6 +2,7 @@ package app;
 
 import domain.Book;
 import domain.BookCopy;
+import domain.BookLoan;
 import domain.Member;
 import service.LibraryService;
 
@@ -18,6 +19,7 @@ public class LibrarianUI {
             System.out.println("\n──────── LIBRARIAN MENU ─────────");
             System.out.println("[1] Books");
             System.out.println("[2] Members");
+            System.out.println("[3] Loans");
             System.out.println("[b] Back");
 
             String input = scanner.nextLine().trim();
@@ -28,6 +30,9 @@ public class LibrarianUI {
                     break;
                 case "2":
                     membersMenu(libraryService, scanner);
+                    break;
+                case "3":
+                    loansMenu(libraryService,scanner);
                     break;
                 case "b":
                     return;
@@ -96,6 +101,42 @@ public class LibrarianUI {
             }
         }
 
+    }
+
+    public static void loansMenu(LibraryService libraryService , Scanner scanner) {
+
+
+        while (true) {
+            System.out.println("\n──LOANS MANAGEMENT ────────────────");
+            System.out.println("[1] View all active loans");
+            System.out.println("[b] Back");
+
+
+            String input = scanner.nextLine().trim();
+
+            switch (input) {
+                case "1":
+                    viewAllActiveLoans(libraryService);
+                    break;
+                case "b":
+                    return;
+            }
+        }
+    }
+
+    public static void viewAllActiveLoans(LibraryService libraryService) {
+        System.out.println("\n── ACTIVE LOANS ───────────────");
+
+        Collection<BookLoan> loans = libraryService.getAllActiveLoans();
+
+        System.out.printf("  %-13s  %-13s  %-30s  %-15s%n",
+                "Loan ID","Member ID", "Title", "Due date");
+        System.out.println("  " + "─".repeat(75));
+
+        for (BookLoan loan : loans) {
+            System.out.printf("  %-13s  %-13s  %-30s  %-15s%n",
+                    loan.getLoanId(),loan.getMember().getMemberId() ,loan.getCopy().getBook().getTitle(), loan.getDueDate());
+        }
     }
 
     public static void registerMember(LibraryService libraryService, Scanner scanner) {
