@@ -309,6 +309,13 @@ use guiding mode, not teaching mode.
 - Structured text with delimiters for serialization
 - Parsing: split(), Double.parseDouble(), valueOf()
 - LocalDateTime.parse() for timestamp deserialization
+### Functional Programming & Streams
+- Stream pipelines: `collection.stream()` → intermediate ops → terminal op
+- `filter(predicate)` — keeps elements matching a condition
+- `collect(Collectors.toList())` — gathers stream results into a List; replaces for-loop + if + add
+- `findFirst()` — returns `Optional<T>`, first matching element or empty
+- `orElseThrow(Supplier)` — unwraps Optional or throws a supplied exception
+- Lambdas as stream arguments: `stream().filter(x -> x.isActive())`
 ### Testing
 - JUnit 5 setup, @Test, @BeforeEach
 - assertEquals, assertTrue, assertFalse, assertThrows
