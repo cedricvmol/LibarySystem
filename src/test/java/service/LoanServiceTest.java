@@ -93,11 +93,22 @@ public class LoanServiceTest {
     }
 
     @Test
-    void getAllActiveLoans(){
+    void testGetAllActiveLoans(){
         loanService.borrowBook(member,book.getIsbn());
         loanService.borrowBook(member2,book2.getIsbn());
 
-        assertEquals(2,loanService.getA);
+        assertEquals(2,loanService.getAllActiveLoans().size());
+    }
+
+    @Test
+    void testGetAllActiveLoansExcludeReturnedLoans(){
+        loanService.borrowBook(member,book.getIsbn());
+        loanService.borrowBook(member2,book2.getIsbn());
+
+        List<BookLoan> loans = loanService.getAllActiveLoans();
+        loans.getFirst().setReturned(true);
+
+        assertEquals(1,loanService.getAllActiveLoans().size());
     }
 
 
