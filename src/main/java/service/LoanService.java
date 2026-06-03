@@ -3,10 +3,7 @@ package service;
 import domain.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class LoanService {
@@ -29,11 +26,11 @@ public class LoanService {
     }
 
     public List<BookLoan> getActiveLoansForMember(String memberId){
-        return loans.stream().filter(loan -> !loan.isReturned() && loan.getMember().getMemberId().equals(memberId)).collect(Collectors.toList());
+        return loans.stream().filter(loan -> !loan.isReturned() && loan.getMember().getMemberId().equals(memberId)).sorted(Comparator.comparing(BookLoan::getDueDate)).collect(Collectors.toList());
     }
 
     public List<BookLoan> getAllActiveLoans(){
-        return loans.stream().filter(loan -> !loan.isReturned()).collect(Collectors.toList());
+        return loans.stream().filter(loan -> !loan.isReturned()).sorted(Comparator.comparing(BookLoan::getDueDate)).collect(Collectors.toList());
     }
 
     public String returnBook(String loanId){
