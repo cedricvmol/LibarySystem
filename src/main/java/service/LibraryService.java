@@ -1,9 +1,6 @@
 package service;
 
-import domain.Book;
-import domain.BookCopy;
-import domain.BookLoan;
-import domain.Member;
+import domain.*;
 
 import java.util.Collection;
 import java.util.List;
@@ -14,11 +11,13 @@ public class LibraryService {
     private MemberService memberService;
     private BookService bookService;
     private LoanService loanService;
+    private ReservationService reservationService;
 
-    public LibraryService(MemberService memberService, BookService bookService, LoanService loanService) {
+    public LibraryService(MemberService memberService, BookService bookService, LoanService loanService,ReservationService reservationService) {
         this.memberService = memberService;
         this.bookService = bookService;
         this.loanService = loanService;
+        this.reservationService = reservationService;
     }
 
     public void addBook(String isbn, String title, String genre, String author, String language, String publisher, int loanPeriodDays) {
@@ -73,7 +72,7 @@ public class LibraryService {
     public void borrowBook(String memberId, String isbn){
         Optional<Member> result = memberService.getMember(memberId);
         if(result.isEmpty()){
-           throw new NoSuchElementException("The member does not exist.");
+           throw new IllegalArgumentException("The member does not exist.");
         }
         loanService.borrowBook(result.get(),isbn);
     }
@@ -89,5 +88,31 @@ public class LibraryService {
     public Collection<Book> searchBooks(String query , String field){
         return bookService.searchBooks(query,field);
     }
+
+    public void createReservation(String memberId, String isbn){
+        Optional<Member> result = memberService.getMember(memberId);
+        if(result.isEmpty()){
+            throw new IllegalArgumentException("The member does not exist.");
+        }
+        reservationService.createReservation(result.get(),isbn);
+    }
+
+    public void cancelReservation(String reservationId){
+        reservationService.cancelReservation(reservationId);
+    }
+
+    public List<Reservation> getPendingReservationsForMember(String memberId){
+        return reservationService.getPendingReservationsForMember(memberId);
+    }
+
+    public List<Reservation> getAllPendingReservations(){
+        return reservationService.getAllPendingReservations();
+    }
+
+    public void returnBook(String loanId){
+        reservationService.fulfillNextReservation(loanService.returnBook(loanId));
+    }
+
+
 
 }

@@ -1,10 +1,7 @@
 package app;
 
 import domain.Member;
-import service.BookService;
-import service.LibraryService;
-import service.LoanService;
-import service.MemberService;
+import service.*;
 
 import java.util.Optional;
 import java.util.Scanner;
@@ -17,8 +14,9 @@ public class LibraryApp {
         MemberService memberService = new MemberService();
         BookService bookService = new BookService();
         LoanService loanService = new LoanService(bookService);
+        ReservationService reservationService = new ReservationService(bookService);
 
-        LibraryService libraryService = new LibraryService(memberService, bookService, loanService);
+        LibraryService libraryService = new LibraryService(memberService, bookService, loanService,reservationService);
 
         addTestData(libraryService);
         mainMenu(libraryService);
