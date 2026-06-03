@@ -7,8 +7,10 @@ import domain.Member;
 import service.LibraryService;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class LibrarianUI {
 
@@ -245,7 +247,9 @@ public class LibrarianUI {
     }
 
     public static void viewBooks(LibraryService libraryService) {
-        Collection<Book> books = libraryService.getAllBooks();
+
+
+        List<Book> books = libraryService.getAllBooks().stream().sorted().toList();
 
         System.out.println("\n── ALL BOOKS ────────────────");
         System.out.printf("  %-13s  %-30s  %-25s  %-18s %s%n",

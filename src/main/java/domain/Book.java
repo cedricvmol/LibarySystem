@@ -1,6 +1,6 @@
 package domain;
 
-public class Book {
+public class Book implements Comparable<Book>{
 
     private String isbn;
     private String title;
@@ -52,5 +52,10 @@ public class Book {
 
     public int getLoanPeriodDays() {
         return loanPeriodDays;
+    }
+
+    @Override
+    public int compareTo(Book o) {
+        return this.title.compareTo(o.title);
     }
 }
