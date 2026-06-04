@@ -3,7 +3,7 @@
 ## Classes
 
 ### Book
-Represents a title in the catalog. One book can have many physical copies.
+Represents a title in the catalog. One book can have many physical copies. Implements `Comparable<Book>` — natural ordering by title.
 
 | Field | Type | Notes |
 |-------|------|-------|

@@ -316,6 +316,10 @@ use guiding mode, not teaching mode.
 - `findFirst()` — returns `Optional<T>`, first matching element or empty
 - `orElseThrow(Supplier)` — unwraps Optional or throws a supplied exception
 - Lambdas as stream arguments: `stream().filter(x -> x.isActive())`
+- `sorted()` (no arg) — uses natural order via `Comparable<T>`
+- `sorted(Comparator.comparing(MethodRef))` — external custom ordering without modifying the class
+- `Comparable<T>` — implement on a domain class for natural ordering; `compareTo` returns negative/zero/positive
+- `Comparator.comparing(MethodReference)` — creates a comparator from a getter; used for loans (dueDate) and reservations (reservationDate)
 ### Testing
 - JUnit 5 setup, @Test, @BeforeEach
 - assertEquals, assertTrue, assertFalse, assertThrows

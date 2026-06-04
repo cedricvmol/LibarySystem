@@ -81,5 +81,5 @@ Domain classes have no console output.
 | 2 | Actor selection + member management (librarian) | `Optional` | ✅ Done |
 | 3 | Member menu — search, loan, view loans | Lambdas + `Predicate` | ✅ Done |
 | 4 | Streams API — power up all search and list views | Streams (filter, map, collect) | ✅ Done |
-| 5 | Reservations + sorting | `Comparable` / `Comparator` |
+| 5 | Reservations + sorting | `Comparable` / `Comparator` | ✅ Done |
 | 6 | SQLite persistence + overdue fees | Reinforcement |
