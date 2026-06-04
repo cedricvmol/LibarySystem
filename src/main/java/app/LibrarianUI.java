@@ -1,9 +1,6 @@
 package app;
 
-import domain.Book;
-import domain.BookCopy;
-import domain.BookLoan;
-import domain.Member;
+import domain.*;
 import service.LibraryService;
 
 import java.util.Collection;
@@ -110,7 +107,9 @@ public class LibrarianUI {
 
         while (true) {
             System.out.println("\n──LOANS MANAGEMENT ────────────────");
-            System.out.println("[1] View all active loans");
+            System.out.println("[1] View all active loans.");
+            System.out.println("[2] Process return.");
+            System.out.println("[3] View all pending reservations.");
             System.out.println("[b] Back");
 
 
@@ -120,9 +119,45 @@ public class LibrarianUI {
                 case "1":
                     viewAllActiveLoans(libraryService);
                     break;
+                case "2":
+                    returnBook(libraryService,scanner);
+                    break;
+                case "3":
+                    viewAllReservations(libraryService);
+                    break;
                 case "b":
                     return;
             }
+        }
+    }
+
+    public static void returnBook(LibraryService libraryService,Scanner scanner){
+        System.out.println("\n── RETURN BOOK ───────────────");
+        System.out.println("Give the loan ID for the returned book.");
+        String loanId = scanner.nextLine();
+
+        try {
+            libraryService.returnBook(loanId);
+            System.out.println("U have successfully returned the book.");
+        } catch (IllegalArgumentException e){
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+    public static void viewAllReservations(LibraryService libraryService){
+        System.out.println("\n── ACTIVE RESERVATIONS ───────────────");
+
+        List<Reservation> reservations = libraryService.getAllPendingReservations();
+
+        System.out.printf("  %-16s  %-15s  %-30s  %-15s  %-15s%n",
+                "Reservation ID","Member", "Title","Status","Reservation Date");
+        System.out.println("  " + "─".repeat(100));
+
+
+        for (Reservation reservation : reservations){
+            System.out.printf("  %-16s  %-15s  %-30s  %-15s  %-15s %n",
+                    reservation.getReservationId(),reservation.getMember().getMemberId(),reservation.getBook().getTitle(),reservation.getReservationStatus(),reservation.getReservationDate());
         }
     }
 
