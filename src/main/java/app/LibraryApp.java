@@ -67,9 +67,9 @@ public class LibraryApp {
         libraryService.addCopies("9780385333481",4);
         libraryService.addCopies("9780679720201",3);
         libraryService.addCopies("9780062315007",5);
-        libraryService.addCopies("9781501156700",6);
         libraryService.addCopies("9780525559474",7);
-        libraryService.addCopies("9780316769174",6);
+        libraryService.addCopies("9781501156700",1);
+        libraryService.addCopies("9780316769174",1);
 
 
         libraryService.registerMember("US01", "admin", "Alice Johnson", "123 Maple Street, Springfield", "alice.johnson@email.com", "+1-555-234-5678");
@@ -78,7 +78,12 @@ public class LibraryApp {
         libraryService.registerMember("US04", "admin", "Diana Lee", "10 Elm Court, Apt 3B, Metropolis", "diana.lee@email.com", "+44-7911-123456");
         libraryService.registerMember("US05", "admin", "Emma Patel", "55 Birch Lane, Gotham", "emma.patel@email.com", "+91-98765-43210");
 
-        libraryService.borrowBook("US05","9780316769174");
+
+        libraryService.borrowBook("US02","9781501156700");
+        libraryService.borrowBook("US03","9780316769174");
+
+        libraryService.createReservation("US01","9780316769174");
+        libraryService.createReservation("US01","9781501156700");
     }
 
 

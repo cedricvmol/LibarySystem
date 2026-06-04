@@ -16,7 +16,8 @@
       "PowerShell(git remote *)",
       "Bash(mvn test *)",
       "PowerShell(mvn test *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(python *)"
     ]
   }
 }
