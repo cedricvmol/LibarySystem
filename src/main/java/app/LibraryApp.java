@@ -1,23 +1,26 @@
 package app;
 
-import domain.Member;
-import service.*;
 
-import java.util.Optional;
+import service.*;
+import storage.DatabaseManager;
+
+
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class LibraryApp {
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
 
+        DatabaseManager databaseManager = new DatabaseManager();
         MemberService memberService = new MemberService();
         BookService bookService = new BookService();
         LoanService loanService = new LoanService(bookService);
         ReservationService reservationService = new ReservationService(bookService);
-
         LibraryService libraryService = new LibraryService(memberService, bookService, loanService,reservationService);
 
+        databaseManager.initTables();
         addTestData(libraryService);
         mainMenu(libraryService);
 
