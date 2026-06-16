@@ -2,9 +2,12 @@ package app;
 
 
 import service.*;
+import storage.BookDao;
+import storage.BookStorage;
 import storage.DatabaseManager;
 
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -14,10 +17,17 @@ public class LibraryApp {
     public static void main(String[] args) throws SQLException {
 
         DatabaseManager databaseManager = new DatabaseManager();
+        Connection connection = databaseManager.getConnection();
+        BookDao bookDao = new BookDao(connection);
+        BookStorage bookStorage = new BookStorage(bookDao);
+
         MemberService memberService = new MemberService();
-        BookService bookService = new BookService();
+        BookService bookService = new BookService(bookStorage);
+
+
         LoanService loanService = new LoanService(bookService);
         ReservationService reservationService = new ReservationService(bookService);
+
         LibraryService libraryService = new LibraryService(memberService, bookService, loanService,reservationService);
 
         databaseManager.initTables();

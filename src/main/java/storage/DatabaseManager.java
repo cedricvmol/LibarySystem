@@ -14,6 +14,10 @@ public class DatabaseManager {
         connection = DriverManager.getConnection(CONNECTION_URL);
     }
 
+    public Connection getConnection(){
+        return this.connection;
+    }
+
     public void initTables() throws SQLException {
 
         try (Statement stmt = this.connection.createStatement();){
