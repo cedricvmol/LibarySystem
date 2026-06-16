@@ -4,6 +4,7 @@ import domain.Book;
 import domain.BookCopy;
 import domain.CopyStatus;
 import storage.BookStorage;
+import storage.CopyStorage;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,12 +18,14 @@ public class BookService {
     private HashMap<String, Book> books;
     private HashMap<String, BookCopy> bookCopies;
     private BookStorage bookStorage;
+    private CopyStorage copyStorage;
 
 
-    public BookService(BookStorage bookStorage) {
+    public BookService(BookStorage bookStorage,CopyStorage copyStorage) {
         this.books = new HashMap<>();
         this.bookCopies = new HashMap<>();
         this.bookStorage = bookStorage;
+        this.copyStorage = copyStorage;
     }
 
     public void addBook(Book book) {

@@ -20,7 +20,7 @@ public class BookServiceTest {
 
     @BeforeEach
     void setUp(){
-        bookService = new BookService();
+        bookService = new BookService(null,null);
     }
 
     @Test
