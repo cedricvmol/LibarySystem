@@ -1,16 +1,19 @@
 package service;
 
 import domain.Member;
+import storage.MemberStorage;
 
 import java.util.*;
 
 public class MemberService {
 
     private HashMap<String, Member> members;
+    private MemberStorage memberStorage;
 
 
-    public MemberService() {
+    public MemberService(MemberStorage memberStorage) {
         this.members = new HashMap<>();
+        this.memberStorage = memberStorage;
     }
 
     public void registerMember(Member member) {

@@ -2,9 +2,7 @@ package app;
 
 
 import service.*;
-import storage.BookDao;
-import storage.BookStorage;
-import storage.DatabaseManager;
+import storage.*;
 
 
 import java.sql.Connection;
@@ -18,12 +16,15 @@ public class LibraryApp {
 
         DatabaseManager databaseManager = new DatabaseManager();
         Connection connection = databaseManager.getConnection();
+
         BookDao bookDao = new BookDao(connection);
         BookStorage bookStorage = new BookStorage(bookDao);
 
-        MemberService memberService = new MemberService();
-        BookService bookService = new BookService(bookStorage);
+        MemberDao memberDao = new MemberDao(connection);
+        MemberStorage memberStorage = new MemberStorage(memberDao);
 
+        MemberService memberService = new MemberService(memberStorage);
+        BookService bookService = new BookService(bookStorage);
 
         LoanService loanService = new LoanService(bookService);
         ReservationService reservationService = new ReservationService(bookService);

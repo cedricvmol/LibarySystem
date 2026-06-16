@@ -20,7 +20,7 @@ public class BookDao {
             try (Statement stmt = connection.createStatement();
                  PreparedStatement bookStmt = connection.prepareStatement("INSERT OR REPLACE INTO books (" +
                          "isbn,title,genre,author,language,publisher,loanPeriodDays) VALUES (" +
-                         "?,?,?,?,?,?,?)");) {
+                         "?,?,?,?,?,?,?)")) {
                 stmt.execute("DELETE FROM books");
                 for (Book book : books) {
                     bookStmt.setString(1, book.getIsbn());

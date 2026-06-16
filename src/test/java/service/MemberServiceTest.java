@@ -14,9 +14,7 @@ public class MemberServiceTest {
 
     @BeforeEach
     void setup(){
-        memberService = new MemberService();
-
-
+        memberService = new MemberService(null);
     }
 
     @Test
