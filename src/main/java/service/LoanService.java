@@ -1,6 +1,7 @@
 package service;
 
 import domain.*;
+import storage.LoanStorage;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -10,9 +11,11 @@ public class LoanService {
 
     private List<BookLoan> loans = new ArrayList<>();
     private BookService bookService;
+    private LoanStorage loanStorage;
 
-    public LoanService(BookService bookService) {
+    public LoanService(BookService bookService,LoanStorage loanStorage) {
         this.bookService = bookService;
+        this.loanStorage = loanStorage;
     }
 
     public void borrowBook(Member member, String isbn) {

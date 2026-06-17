@@ -13,12 +13,7 @@ public class BookLoan {
     private double fee;
     private boolean returned;
 
-    public BookLoan(String loanId,
-                    BookCopy copy,
-                    Member member,
-                    LocalDate loanDate,
-                    LocalDate dueDate) {
-
+    public BookLoan(String loanId, BookCopy copy, Member member, LocalDate loanDate, LocalDate dueDate) {
         this.loanId = loanId;
         this.copy = copy;
         this.member = member;

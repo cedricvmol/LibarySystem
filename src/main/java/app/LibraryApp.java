@@ -26,10 +26,13 @@ public class LibraryApp {
         CopyDao copyDao = new CopyDao(connection);
         CopyStorage copyStorage = new CopyStorage(copyDao);
 
+        LoanDao loanDao = new LoanDao(connection);
+        LoanStorage loanStorage = new LoanStorage(loanDao);
+
         MemberService memberService = new MemberService(memberStorage);
         BookService bookService = new BookService(bookStorage,copyStorage);
 
-        LoanService loanService = new LoanService(bookService);
+        LoanService loanService = new LoanService(bookService,loanStorage);
         ReservationService reservationService = new ReservationService(bookService);
 
         LibraryService libraryService = new LibraryService(memberService, bookService, loanService,reservationService);

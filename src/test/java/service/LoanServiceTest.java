@@ -20,7 +20,7 @@ public class LoanServiceTest {
     @BeforeEach
     void setup(){
         bookService = new BookService(null,null);
-        loanService = new LoanService(bookService);
+        loanService = new LoanService(bookService,null);
 
         member = new Member("US01", "admin", "Alice Johnson", "123 Maple Street, Springfield", "alice.johnson@email.com", "+1-555-234-5678");
         member2 = new Member("US02", "admin", "Bob Smith", "456 Oak Avenue, Shelbyville", "bob.smith@email.com", "+1-555-876-5432");

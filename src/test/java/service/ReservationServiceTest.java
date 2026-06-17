@@ -21,7 +21,7 @@ public class ReservationServiceTest {
     @BeforeEach
     void setUp(){
         bookService = new BookService(null,null);
-        loanService = new LoanService(bookService);
+        loanService = new LoanService(bookService,null);
         reservationService = new ReservationService(bookService);
 
 
