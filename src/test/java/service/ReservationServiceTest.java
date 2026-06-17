@@ -22,7 +22,7 @@ public class ReservationServiceTest {
     void setUp(){
         bookService = new BookService(null,null);
         loanService = new LoanService(bookService,null);
-        reservationService = new ReservationService(bookService);
+        reservationService = new ReservationService(bookService,null);
 
 
         member = new Member("US01", "admin", "Alice Johnson", "123 Maple Street, Springfield", "alice.johnson@email.com", "+1-555-234-5678");

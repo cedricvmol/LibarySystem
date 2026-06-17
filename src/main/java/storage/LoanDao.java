@@ -21,18 +21,12 @@ public class LoanDao {
     }
 
     public void saveAll(List<BookLoan> loans) throws SQLException {
-
-
         connection.setAutoCommit(false);
-
         try {
-
             try (Statement stmt = connection.createStatement();
                  PreparedStatement preparedStatement = connection.prepareStatement("INSERT OR REPLACE INTO loans (" +
                          "loanId,copyId,memberId,loanDate,dueDate,returnDate,fee,returned) VALUES  (?,?,?,?,?,?,?,?)")) {
-
                 stmt.execute("DELETE FROM loans");
-
                 for (BookLoan loan : loans) {
                     preparedStatement.setString(1, loan.getLoanId());
                     preparedStatement.setString(2, loan.getCopy().getCopyId());
@@ -60,10 +54,8 @@ public class LoanDao {
 
     public List<BookLoan> loadAll(Map<String,BookCopy> copies, Map<String,Member> members) throws SQLException{
         List<BookLoan> loans = new ArrayList<>();
-
         try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM loans");
             ResultSet rs = stmt.executeQuery()){
-
             while (rs.next()) {
                 String loanId = rs.getString("loanId");
                 String copyId = rs.getString("copyId");
@@ -73,7 +65,6 @@ public class LoanDao {
                 String returnDate = rs.getString("returnDate");
                 Double fee = rs.getDouble("fee");
                 boolean isReturned = rs.getBoolean("returned");
-
                 LocalDate loanDateCon = LocalDate.parse(loanDate, formatter);
                 LocalDate dueDateCon = LocalDate.parse(dueDate,formatter);
                 LocalDate returnDateCon;
@@ -82,9 +73,9 @@ public class LoanDao {
                 } else {
                     returnDateCon = null;
                 }
-
                 BookCopy copy = copies.get(copyId);
                 Member member = members.get(memberId);
+
                 BookLoan bookLoan = new BookLoan(loanId,copy,member,loanDateCon,dueDateCon);
 
                 bookLoan.setFee(fee);
@@ -92,7 +83,6 @@ public class LoanDao {
                 bookLoan.setReturnDate(returnDateCon);
 
                 loans.add(bookLoan);
-
             }
         }
         return loans;

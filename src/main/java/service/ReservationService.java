@@ -1,6 +1,7 @@
 package service;
 
 import domain.*;
+import storage.ReservationStorage;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -13,10 +14,12 @@ public class ReservationService {
 
     private List<Reservation> reservations = new ArrayList<>();
     private BookService bookService;
+    private ReservationStorage reservationStorage;
 
 
-    public ReservationService(BookService bookService){
+    public ReservationService(BookService bookService,ReservationStorage reservationStorage){
         this.bookService = bookService;
+        this.reservationStorage = reservationStorage;
     }
 
 
