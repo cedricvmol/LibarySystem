@@ -17,7 +17,21 @@
       "Bash(mvn test *)",
       "PowerShell(mvn test *)",
       "Bash(git commit *)",
-      "Bash(python *)"
+      "Bash(python *)",
+      "mcp__dc783b6e-02c4-41ae-b283-f91a447e6cb9__getJiraIssue",
+      "PowerShell(mvn -q -o compile 2>&1)",
+      "PowerShell($env:JAVA_HOME; Get-ChildItem \"C:\\\\Program Files\\\\Java\" -ErrorAction SilentlyContinue; Get-ChildItem \"C:\\\\Program Files\\\\Eclipse Adoptium\" -ErrorAction SilentlyContinue; Get-ChildItem \"$env:USERPROFILE\\\\.m2\" -ErrorAction SilentlyContinue | Select-Object -First 5)",
+      "PowerShell(Get-ChildItem \"C:\\\\Program Files\\\\Java\" -ErrorAction SilentlyContinue -Directory; Get-ChildItem \"C:\\\\Program Files\" -Directory | Where-Object {$_.Name -match 'jdk|jbr|jre'})",
+      "Bash(git checkout *)",
+      "Bash(gh pr create --base master --title 'KAN-63: Wire storage into services and startup loading order' --body ' *)",
+      "Bash(env)",
+      "Bash(git credential *)",
+      "Bash(command -v jq)",
+      "Bash(command -v python)",
+      "Bash(command -v python3)",
+      "Bash(/c/Python310/python.exe --version)",
+      "Read(//c/Python310/**)",
+      "Bash(grep -m1 '\"html_url\": \"https://github.com/cedricvmol/LibarySystem/pull' /tmp/pr_response.json)"
     ]
   }
 }

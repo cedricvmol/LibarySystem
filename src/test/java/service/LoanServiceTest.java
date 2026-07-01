@@ -110,4 +110,42 @@ public class LoanServiceTest {
         assertEquals(1,loanService.getAllActiveLoans().size());
     }
 
+    @Test
+    void testReturnBookAppliesLateFeeWhenOverdue(){
+        Book overdueBook = new Book("9780000000000", "Overdue Book", "Test", "Test Author", "English", "Test Publisher", -3);
+        bookService.addBook(overdueBook);
+        bookService.addCopies(overdueBook.getIsbn(),1);
+
+        loanService.borrowBook(member, overdueBook.getIsbn());
+        BookLoan loan = loanService.getActiveLoansForMember(member.getMemberId()).getFirst();
+
+        loanService.returnBook(loan.getLoanId());
+
+        assertEquals(1.5, loan.getFee(), 0.0001);
+    }
+
+    @Test
+    void testReturnBookNoFeeWhenOnTime(){
+        loanService.borrowBook(member, book.getIsbn());
+        BookLoan loan = loanService.getActiveLoansForMember(member.getMemberId()).getFirst();
+
+        loanService.returnBook(loan.getLoanId());
+
+        assertEquals(0.0, loan.getFee(), 0.0001);
+    }
+
+    @Test
+    void testReturnBookNoFeeWhenReturnedExactlyOnDueDate(){
+        Book dueTodayBook = new Book("9780000000001", "Due Today Book", "Test", "Test Author", "English", "Test Publisher", 0);
+        bookService.addBook(dueTodayBook);
+        bookService.addCopies(dueTodayBook.getIsbn(),1);
+
+        loanService.borrowBook(member, dueTodayBook.getIsbn());
+        BookLoan loan = loanService.getActiveLoansForMember(member.getMemberId()).getFirst();
+
+        loanService.returnBook(loan.getLoanId());
+
+        assertEquals(0.0, loan.getFee(), 0.0001);
+    }
+
 }

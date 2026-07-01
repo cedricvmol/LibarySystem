@@ -5,10 +5,13 @@ import storage.LoanStorage;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class LoanService {
+
+    private static final double LATE_FEE_PER_DAY = 0.50;
 
     private List<BookLoan> loans = new ArrayList<>();
     private BookService bookService;
@@ -47,6 +50,11 @@ public class LoanService {
         loan.setReturned(true);
         loan.setReturnDate(LocalDate.now());
         loan.getCopy().setStatus(CopyStatus.AVAILABLE);
+
+        if (loan.getReturnDate().isAfter(loan.getDueDate())) {
+            long overdueDays = ChronoUnit.DAYS.between(loan.getDueDate(), loan.getReturnDate());
+            loan.setFee(overdueDays * LATE_FEE_PER_DAY);
+        }
 
         bookService.saveCopies();
         saveLoans();
