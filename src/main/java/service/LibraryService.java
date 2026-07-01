@@ -2,6 +2,7 @@ package service;
 
 import domain.*;
 
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -18,6 +19,13 @@ public class LibraryService {
         this.bookService = bookService;
         this.loanService = loanService;
         this.reservationService = reservationService;
+    }
+
+    public void loadAll() throws SQLException {
+        bookService.load();
+        memberService.load();
+        loanService.load(bookService.getCopiesMap(), memberService.getMembersMap());
+        reservationService.load(bookService.getBooksMap(), memberService.getMembersMap());
     }
 
     public void addBook(String isbn, String title, String genre, String author, String language, String publisher, int loanPeriodDays) {

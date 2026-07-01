@@ -3,10 +3,12 @@ package service;
 import domain.*;
 import storage.ReservationStorage;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 
@@ -31,11 +33,13 @@ public class ReservationService {
         Book bookToReservation = bookService.getBook(isbn);
         Reservation reservation = new Reservation(reservationIdGenerator(),member, bookToReservation, LocalDate.now());
         reservations.add(reservation);
+        saveReservations();
     }
 
     public void cancelReservation(String reservationId){
         Reservation reservationToCancel = reservations.stream().filter(reservation -> reservation.getReservationId().equals(reservationId)).findFirst().orElseThrow(() -> new IllegalArgumentException("No reservation found with that ID."));
         reservationToCancel.setReservationStatus(ReservationStatus.CANCELLED);
+        saveReservations();
     }
 
     public List<Reservation> getPendingReservationsForMember(String memberId){
@@ -51,6 +55,7 @@ public class ReservationService {
                 .sorted(Comparator.comparing(Reservation::getReservationDate))
                 .findFirst()
                 .ifPresent(reservation -> reservation.setReservationStatus(ReservationStatus.FULFILLED));
+        saveReservations();
     }
 
 
@@ -65,5 +70,19 @@ public class ReservationService {
         return id.toString();
     }
 
+    void load(Map<String, Book> books, Map<String, Member> members) throws SQLException {
+        reservations = new ArrayList<>(reservationStorage.loadAll(books, members));
+    }
+
+    void saveReservations() {
+        if (reservationStorage == null) {
+            return;
+        }
+        try {
+            reservationStorage.saveAll(reservations);
+        } catch (SQLException e) {
+            throw new RuntimeException("Failed to save reservations.", e);
+        }
+    }
 
 }

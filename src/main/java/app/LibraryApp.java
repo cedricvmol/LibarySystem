@@ -41,7 +41,10 @@ public class LibraryApp {
         LibraryService libraryService = new LibraryService(memberService, bookService, loanService,reservationService);
 
         databaseManager.initTables();
-        addTestData(libraryService);
+        libraryService.loadAll();
+        if (libraryService.getAllBooks().isEmpty()) {
+            addTestData(libraryService);
+        }
         mainMenu(libraryService);
 
     }

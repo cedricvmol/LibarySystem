@@ -3,6 +3,7 @@ package service;
 import domain.Member;
 import storage.MemberStorage;
 
+import java.sql.SQLException;
 import java.util.*;
 
 public class MemberService {
@@ -21,6 +22,7 @@ public class MemberService {
             throw new IllegalArgumentException("Member with id: " + member.getMemberId() + " already exists.");
         }
         members.put(member.getMemberId(), member);
+        saveMembers();
     }
 
     public Optional<Member> getMember(String memberId) {
@@ -39,5 +41,28 @@ public class MemberService {
             throw new IllegalArgumentException("Member with id: " + memberId + " does not exist.");
         }
         members.remove(memberId);
+        saveMembers();
+    }
+
+    void load() throws SQLException {
+        members = new HashMap<>();
+        for (Member member : memberStorage.loadAll()) {
+            members.put(member.getMemberId(), member);
+        }
+    }
+
+    Map<String, Member> getMembersMap() {
+        return members;
+    }
+
+    void saveMembers() {
+        if (memberStorage == null) {
+            return;
+        }
+        try {
+            memberStorage.saveAll(new ArrayList<>(members.values()));
+        } catch (SQLException e) {
+            throw new RuntimeException("Failed to save members.", e);
+        }
     }
 }
