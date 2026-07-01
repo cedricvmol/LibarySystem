@@ -137,8 +137,13 @@ public class LibrarianUI {
         String loanId = scanner.nextLine();
 
         try {
-            libraryService.returnBook(loanId);
+            double fee = libraryService.returnBook(loanId);
             System.out.println("U have successfully returned the book.");
+            if (fee > 0) {
+                System.out.printf("Overdue fee: €%.2f%n", fee);
+            } else {
+                System.out.println("No overdue fee.");
+            }
         } catch (IllegalArgumentException e){
             System.out.println(e.getMessage());
         }

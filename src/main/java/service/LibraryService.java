@@ -117,8 +117,10 @@ public class LibraryService {
         return reservationService.getAllPendingReservations();
     }
 
-    public void returnBook(String loanId){
-        reservationService.fulfillNextReservation(loanService.returnBook(loanId));
+    public double returnBook(String loanId){
+        BookLoan loan = loanService.returnBook(loanId);
+        reservationService.fulfillNextReservation(loan.getCopy().getBook().getIsbn());
+        return loan.getFee();
     }
 
     

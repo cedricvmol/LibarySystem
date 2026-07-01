@@ -42,7 +42,7 @@ public class LoanService {
         return loans.stream().filter(loan -> !loan.isReturned()).sorted(Comparator.comparing(BookLoan::getDueDate)).collect(Collectors.toList());
     }
 
-    public String returnBook(String loanId){
+    public BookLoan returnBook(String loanId){
         BookLoan loan = loans.stream().filter(bookLoan -> bookLoan.getLoanId().equals(loanId)).findFirst().orElseThrow(() -> new IllegalArgumentException("No loan was found with that ID."));
         if (loan.isReturned()){
             throw new IllegalArgumentException("The book is already returned.");
@@ -59,7 +59,7 @@ public class LoanService {
         bookService.saveCopies();
         saveLoans();
 
-        return loan.getCopy().getBook().getIsbn();
+        return loan;
     }
 
     void load(Map<String, BookCopy> copies, Map<String, Member> members) throws SQLException {
