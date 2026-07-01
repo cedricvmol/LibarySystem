@@ -3,6 +3,7 @@ package service;
 import domain.*;
 import storage.LoanStorage;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -26,6 +27,8 @@ public class LoanService {
         copy.setStatus(CopyStatus.BORROWED);
         BookLoan loan = new BookLoan(loanIdGenerator(),copy,member,LocalDate.now(),LocalDate.now().plusDays(copy.getBook().getLoanPeriodDays()));
         loans.add(loan);
+        bookService.saveCopies();
+        saveLoans();
     }
 
     public List<BookLoan> getActiveLoansForMember(String memberId){
@@ -45,7 +48,25 @@ public class LoanService {
         loan.setReturnDate(LocalDate.now());
         loan.getCopy().setStatus(CopyStatus.AVAILABLE);
 
+        bookService.saveCopies();
+        saveLoans();
+
         return loan.getCopy().getBook().getIsbn();
+    }
+
+    void load(Map<String, BookCopy> copies, Map<String, Member> members) throws SQLException {
+        loans = new ArrayList<>(loanStorage.loadAll(copies, members));
+    }
+
+    void saveLoans() {
+        if (loanStorage == null) {
+            return;
+        }
+        try {
+            loanStorage.saveAll(loans);
+        } catch (SQLException e) {
+            throw new RuntimeException("Failed to save loans.", e);
+        }
     }
 
     public String loanIdGenerator() {

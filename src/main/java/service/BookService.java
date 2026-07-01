@@ -6,9 +6,11 @@ import domain.CopyStatus;
 import storage.BookStorage;
 import storage.CopyStorage;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -33,6 +35,7 @@ public class BookService {
             throw new IllegalArgumentException("Book with ISBN: " + book.getIsbn() + " is already registered.");
         }
         books.put(book.getIsbn(),book);
+        saveBooks();
     }
 
     public void addCopies(String isbn, int amount) {
@@ -45,6 +48,7 @@ public class BookService {
             bookCopies.put(copyId, new BookCopy(copyId, books.get(isbn), CopyStatus.AVAILABLE));
         }
 
+        saveCopies();
     }
 
     public Book getBook(String isbn) {
@@ -79,6 +83,8 @@ public class BookService {
         }
 
         books.remove(isbn);
+        saveCopies();
+        saveBooks();
 
     }
 
@@ -129,5 +135,46 @@ public class BookService {
         return id.toString();
     }
 
+    void load() throws SQLException {
+        books = new HashMap<>();
+        for (Book book : bookStorage.loadAll()) {
+            books.put(book.getIsbn(), book);
+        }
+
+        bookCopies = new HashMap<>();
+        for (BookCopy copy : copyStorage.loadAll(books)) {
+            bookCopies.put(copy.getCopyId(), copy);
+        }
+    }
+
+    Map<String, Book> getBooksMap() {
+        return books;
+    }
+
+    Map<String, BookCopy> getCopiesMap() {
+        return bookCopies;
+    }
+
+    void saveBooks() {
+        if (bookStorage == null) {
+            return;
+        }
+        try {
+            bookStorage.saveAll(new ArrayList<>(books.values()));
+        } catch (SQLException e) {
+            throw new RuntimeException("Failed to save books.", e);
+        }
+    }
+
+    void saveCopies() {
+        if (copyStorage == null) {
+            return;
+        }
+        try {
+            copyStorage.saveAll(new ArrayList<>(bookCopies.values()));
+        } catch (SQLException e) {
+            throw new RuntimeException("Failed to save book copies.", e);
+        }
+    }
 
 }
