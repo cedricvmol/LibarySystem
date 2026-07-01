@@ -53,3 +53,13 @@ services — in that order.
 - App starts, creates `library.db` if it doesn't exist, tables initialised automatically
 - All data survives a restart — books, members, copies, loans, and reservations
 - `returnBook()` calculates and stores the overdue fee; librarian sees it printed
+
+---
+
+## Known limitations
+- Cross-table saves are not atomic. `borrowBook()` and `returnBook()` each call
+  `bookService.saveCopies()` and `saveLoans()` as two separate DB writes. If the
+  second write fails after the first succeeds, the copy status and loan record
+  can drift out of sync (e.g. a copy persisted as `BORROWED` with no matching
+  loan row). Acceptable for now at this project's scale — would need a shared
+  transaction across DAOs to close properly.
